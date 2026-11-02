@@ -1,0 +1,2345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EMS Shopify Store</title>
+  <link rel="icon" type="image/png" href="/assets/devsil-logo.png" />
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-card">
+          <img src="/assets/devsil-logo.png" alt="Devsil" class="devsil-brand-img" />
+          <span class="brand-portal-tag">EMS</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Catalog & Management</div>
+
+        <div class="nav-item active" data-tab="products" id="nav-products">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Shopify Products</span>
+        </div>
+
+        <div class="nav-item" data-tab="ems" id="nav-ems">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <ellipse cx="12" cy="5" rx="9" ry="3" stroke-width="2"/>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" stroke-width="2"/>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke-width="2"/>
+          </svg>
+          <span>List from EMS</span>
+        </div>
+
+        <div class="nav-section-title" style="margin-top: 0.85rem;">Sales & Audit</div>
+
+        <div class="nav-item" data-tab="orders" id="nav-orders">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="9" cy="21" r="1" stroke-width="2"/>
+            <circle cx="20" cy="21" r="1" stroke-width="2"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Shopify Orders</span>
+        </div>
+
+        <div class="nav-item" data-tab="records" id="nav-records">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="14 2 14 8 20 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="16" y1="13" x2="8" y2="13" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="16" y1="17" x2="8" y2="17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="10 9 9 9 8 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Audit Records</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-status-row">
+          <span class="sidebar-status-key">EMS System:</span>
+          <span class="sidebar-status-val" style="color: #34d399;">Active</span>
+        </div>
+        <div class="sidebar-status-row">
+          <span class="sidebar-status-key">Integration:</span>
+          <span class="sidebar-status-val" style="color: #818cf8;">Shopify Live</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <!-- Top Sticky Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <div class="header-breadcrumbs">
+            <span class="breadcrumb-root">EMS Workspace</span>
+            <span class="breadcrumb-divider">/</span>
+            <h1 class="page-title" id="pageTitle">Products</h1>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="shop-status-badge" id="shopStatusBadge">
+            <span class="status-dot"></span>
+            <span id="shopDomainText">Connecting...</span>
+          </div>
+
+          <div class="user-menu-container">
+            <button class="user-avatar-btn" id="userMenuBtn" aria-label="User Profile">
+              <div class="user-avatar" id="userAvatar">EM</div>
+              <span class="user-name" id="userName">Staff</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="user-dropdown" id="userDropdown">
+              <div class="user-dropdown-header">
+                <span class="user-email-label" id="userEmailLabel">staff@shopify.com</span>
+              </div>
+              <button class="user-dropdown-item" id="logoutBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Views -->
+      <main class="app-content">
+        <!-- ========================================== -->
+        <!-- 1) TAB: PRODUCTS                           -->
+        <!-- ========================================== -->
+        <section class="page-tab-pane active" id="pane-products">
+          <!-- Summary Strip -->
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span class="summary-label">Total Products</span>
+              <span class="summary-value" id="prodSummaryTotal">-</span>
+              <span class="summary-meta">Catalog items on Shopify</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Active</span>
+              <span class="summary-value" style="color: var(--color-success-text);" id="prodSummaryActive">-</span>
+              <span class="summary-meta">Live on online store</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Draft</span>
+              <span class="summary-value" style="color: var(--color-warning-text);" id="prodSummaryDraft">-</span>
+              <span class="summary-meta">Unpublished drafts</span>
+            </div>
+          </div>
+
+          <!-- Password Protected Storefront Notice Banner -->
+          <div style="background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 1.25rem; font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;">
+            <div>
+              <strong style="color:#ffffff;">💡 Storefront Preview Tip:</strong> If clicking "Preview" opens Shopify's <em>"Opening Soon"</em> page, click <strong>"Are you the store owner? Log in here"</strong> to log in, or use <strong>"Enter using password"</strong>. (Or click <strong>Admin</strong> on any card to view and edit directly in Shopify Admin).
+            </div>
+            <a id="quickAdminLink" href="https://devsil-store.myshopify.com/admin" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="flex-shrink:0;">Shopify Admin ↗</a>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="toolbar-container">
+            <div class="toolbar-group">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+                </svg>
+                <input type="text" class="form-input search-input" id="prodSearchInput" placeholder="Search products..." />
+              </div>
+
+              <select class="form-select" id="prodStatusFilter">
+                <option value="ALL">All Status</option>
+                <option value="ACTIVE">Active</option>
+                <option value="DRAFT">Draft</option>
+              </select>
+
+              <button class="btn btn-secondary btn-sm" id="prodRefreshBtn" title="Refresh Products">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                Refresh
+              </button>
+            </div>
+
+            <div class="toolbar-group">
+              <button class="btn btn-primary" id="openAddProductModalBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add product
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="products-grid" id="productsGridContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2) TAB: LIST FROM EMS                      -->
+        <!-- ========================================== -->
+        <section class="page-tab-pane" id="pane-ems">
+          <!-- Toolbar -->
+          <div class="toolbar-container">
+            <div class="toolbar-group">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+                </svg>
+                <input type="text" class="form-input search-input" id="emsSearchInput" placeholder="Search EMS database..." />
+              </div>
+
+              <div style="display:flex; align-items:center; gap:0.4rem;">
+                <label class="form-label" style="margin:0; font-weight:normal; color:var(--text-muted);">Target Status:</label>
+                <select class="form-select" id="emsTargetStatusSelect">
+                  <option value="DRAFT" selected>Draft (Recommended)</option>
+                  <option value="ACTIVE">Active (Live immediately)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-secondary btn-sm" id="emsSelectAllBtn">Select all on this page</button>
+            </div>
+
+            <div class="toolbar-group">
+              <button class="btn btn-secondary btn-sm" id="emsRefreshBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Database Status Banner if not connected -->
+          <div id="emsErrorContainer" style="display:none; margin-bottom: 1.5rem;">
+            <div style="background-color: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--color-danger)" stroke-width="2" style="margin-bottom: 0.75rem;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h3 style="color: #f87171; font-size: 1.05rem; font-weight:700; margin-bottom: 0.5rem;" id="emsErrorTitle">Database Connection Notice</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 580px; margin: 0 auto 1.25rem; line-height: 1.5;" id="emsErrorMessage"></p>
+              <button class="btn btn-secondary" id="emsRetryBtn">Retry Database Connection</button>
+            </div>
+          </div>
+
+          <!-- EMS Table Card -->
+          <div class="table-card" id="emsTableCard">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px; text-align: center;">
+                      <input type="checkbox" id="emsMasterCheckbox" />
+                    </th>
+                    <th style="width: 64px;">Image</th>
+                    <th>Product Title</th>
+                    <th>SKU / Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Listing Status</th>
+                  </tr>
+                </thead>
+                <tbody id="emsTableBody">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container" id="emsPagination">
+              <div class="pagination-info" id="emsPageInfo">Showing 0-0 of 0 items</div>
+              <div class="pagination-controls">
+                <button class="btn btn-secondary btn-sm" id="emsPrevPageBtn" disabled>Previous</button>
+                <span id="emsCurrentPageLabel" style="font-size:0.85rem; padding: 0 0.5rem;">Page 1</span>
+                <button class="btn btn-secondary btn-sm" id="emsNextPageBtn" disabled>Next</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sticky Bottom Action Bar for EMS Selection -->
+          <div class="sticky-selection-bar" id="emsStickyBar">
+            <span id="emsSelectedCountLabel" style="font-weight:700; color:#ffffff;">0 selected</span>
+            <button class="btn btn-primary" id="emsSubmitListBtn">List on Shopify</button>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3) TAB: ORDERS                             -->
+        <!-- ========================================== -->
+        <section class="page-tab-pane" id="pane-orders">
+          <!-- Summary Cards -->
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span class="summary-label">Total Orders</span>
+              <span class="summary-value" id="orderSummaryTotal">-</span>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.35rem;">
+                <span class="summary-meta" id="orderLastSyncLabel">Not synced yet</span>
+                <button class="btn btn-secondary btn-sm" id="syncOrdersBtn" style="height:26px; padding:0 0.65rem; font-size:0.75rem;">Sync now</button>
+              </div>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Unfulfilled</span>
+              <span class="summary-value" style="color: var(--color-warning-text);" id="orderSummaryUnfulfilled">-</span>
+              <span class="summary-meta">Awaiting dispatch</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Paid</span>
+              <span class="summary-value" style="color: var(--color-success-text);" id="orderSummaryPaid">-</span>
+              <span class="summary-meta">Settled transactions</span>
+            </div>
+            <div class="summary-card">
+              <span class="summary-label">Revenue Today</span>
+              <span class="summary-value" style="color: #818cf8;" id="orderSummaryRevenue">-</span>
+              <span class="summary-meta">Orders placed today</span>
+            </div>
+          </div>
+
+          <!-- Protected Customer Data Banner -->
+          <div id="customerDataNotice" style="display:none; background-color: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: var(--radius-md); padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #7dd3fc;">
+            ℹ️ Shopify hides customer personal details until protected customer data access is approved for this app.
+          </div>
+
+          <!-- Toolbar -->
+          <div class="toolbar-container">
+            <div class="toolbar-group">
+              <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="8" stroke-width="2"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-width="2"></line>
+                </svg>
+                <input type="text" class="form-input search-input" id="orderSearchInput" placeholder="Search order #, customer, phone..." />
+              </div>
+
+              <select class="form-select" id="orderFinancialFilter">
+                <option value="ALL">All Payment</option>
+                <option value="PAID">Paid</option>
+                <option value="PENDING">Pending</option>
+                <option value="REFUNDED">Refunded</option>
+              </select>
+
+              <select class="form-select" id="orderFulfillmentFilter">
+                <option value="ALL">All Fulfillment</option>
+                <option value="UNFULFILLED">Unfulfilled</option>
+                <option value="FULFILLED">Fulfilled</option>
+              </select>
+
+              <button class="btn btn-secondary btn-sm" id="orderRefreshBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Orders Table Card -->
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Date / Time</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Fulfillment</th>
+                    <th>City</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Orders Pagination -->
+            <div class="pagination-container" id="orderPagination">
+              <div class="pagination-info" id="orderPageInfo">Showing 0-0 of 0 orders</div>
+              <div class="pagination-controls">
+                <button class="btn btn-secondary btn-sm" id="orderPrevPageBtn" disabled>Previous</button>
+                <span id="orderCurrentPageLabel" style="font-size:0.85rem; padding: 0 0.5rem;">Page 1</span>
+                <button class="btn btn-secondary btn-sm" id="orderNextPageBtn" disabled>Next</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4) TAB: RECORDS                            -->
+        <!-- ========================================== -->
+        <section class="page-tab-pane" id="pane-records">
+          <!-- Toolbar -->
+          <div class="toolbar-container">
+            <div class="toolbar-group">
+              <select class="form-select" id="recordActionFilter">
+                <option value="ALL">All Actions</option>
+                <option value="listed_from_ems">Listed from EMS</option>
+                <option value="created">Created Product</option>
+                <option value="status_changed">Status Changed</option>
+                <option value="deleted">Deleted Product</option>
+              </select>
+
+              <button class="btn btn-secondary btn-sm" id="recordsRefreshBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+                Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Records Table Card -->
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Product Title</th>
+                    <th>Status</th>
+                    <th>Note</th>
+                  </tr>
+                </thead>
+                <tbody id="recordsTableBody">
+                  <!-- Rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD PRODUCT                         -->
+  <!-- ========================================== -->
+  <!-- MODAL: ADD PRODUCT                         -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="addProductModal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Product</h3>
+        <button class="drawer-close-btn" id="closeAddProductModalBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="addProductForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="addTitle">Product Title *</label>
+            <input type="text" id="addTitle" class="form-input" required placeholder="e.g. Nike Air Zoom Pegasus 40" />
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label" for="addVendor">Vendor / Brand</label>
+              <input type="text" id="addVendor" class="form-input" placeholder="e.g. Nike" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addProductType">Product Type</label>
+              <input type="text" id="addProductType" class="form-input" placeholder="e.g. Footwear" />
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label" for="addPrice">Price ($)</label>
+              <input type="number" step="0.01" min="0" id="addPrice" class="form-input" placeholder="120.00" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="addStatus">Initial Status</label>
+              <select id="addStatus" class="form-select">
+                <option value="DRAFT" selected>Draft</option>
+                <option value="ACTIVE">Active (Live on store)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addTags">Tags (Comma-separated)</label>
+            <input type="text" id="addTags" class="form-input" placeholder="e.g. Shoes, Running, Men" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addDescription">Description</label>
+            <textarea id="addDescription" class="form-textarea" placeholder="Enter product details, specifications..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Product Images</label>
+            <div class="image-uploader-wrapper">
+              <input type="file" id="addImgFileInput" multiple accept="image/*" style="display:none;" />
+              <div class="image-dropzone" id="addImgDropzone">
+                <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <div class="dropzone-prompt">Click to choose images or drag & drop here</div>
+                <div class="dropzone-sub">Supports PNG, JPG, WebP. Direct clipboard paste (Ctrl+V) also active.</div>
+              </div>
+
+              <div style="display:flex; gap:0.5rem;">
+                <input type="url" id="addImgUrlInput" class="form-input" placeholder="Or add image URL (https://...)" />
+                <button type="button" class="btn btn-secondary btn-sm" id="addImgUrlBtn" style="flex-shrink:0;">Add URL</button>
+              </div>
+
+              <div class="image-thumb-grid" id="addImgThumbGrid"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelAddProductBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveAddProductBtn">Create Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EDIT PRODUCT                        -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="editProductModal">
+    <div class="modal-box" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Product</h3>
+        <button class="drawer-close-btn" id="closeEditProductModalBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="editProductForm">
+        <input type="hidden" id="editProductId" />
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="editTitle">Product Title *</label>
+            <input type="text" id="editTitle" class="form-input" required />
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label" for="editVendor">Vendor / Brand</label>
+              <input type="text" id="editVendor" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editProductType">Product Type</label>
+              <input type="text" id="editProductType" class="form-input" />
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+            <div class="form-group">
+              <label class="form-label" for="editPrice">Price ($)</label>
+              <input type="number" step="0.01" min="0" id="editPrice" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editStatus">Status</label>
+              <select id="editStatus" class="form-select">
+                <option value="DRAFT">Draft</option>
+                <option value="ACTIVE">Active (Live on store)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editTags">Tags (Comma-separated)</label>
+            <input type="text" id="editTags" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editDescription">Description</label>
+            <textarea id="editDescription" class="form-textarea"></textarea>
+          </div>
+
+          <!-- Existing Images -->
+          <div class="form-group" id="editExistingImagesSection">
+            <label class="form-label">Current Images</label>
+            <div class="image-thumb-grid" id="editExistingThumbGrid"></div>
+          </div>
+
+          <!-- Add New Images -->
+          <div class="form-group">
+            <label class="form-label">Attach New Images</label>
+            <div class="image-uploader-wrapper">
+              <input type="file" id="editImgFileInput" multiple accept="image/*" style="display:none;" />
+              <div class="image-dropzone" id="editImgDropzone">
+                <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <div class="dropzone-prompt">Choose or drag new images to append</div>
+                <div class="dropzone-sub">Supports PNG, JPG, WebP & Clipboard paste</div>
+              </div>
+
+              <div style="display:flex; gap:0.5rem;">
+                <input type="url" id="editImgUrlInput" class="form-input" placeholder="Or paste image URL (https://...)" />
+                <button type="button" class="btn btn-secondary btn-sm" id="editImgUrlBtn" style="flex-shrink:0;">Add URL</button>
+              </div>
+
+              <div class="image-thumb-grid" id="editNewThumbGrid"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelEditProductBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveEditProductBtn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CONFIRM DELETE                      -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="deleteConfirmModal">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Product</h3>
+        <button class="drawer-close-btn" id="closeDeleteModalBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5;" id="deleteConfirmText">
+          Are you sure you want to permanently delete this product from Shopify? This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: REVIEW EMS PRODUCTS BEFORE LISTING   -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="emsReviewModal">
+    <div class="modal-box" style="max-width: 660px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Review & Edit Before Listing</h3>
+        <button class="drawer-close-btn" id="closeEmsReviewModalBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
+          Review and customize product details before pushing to your Shopify catalog:
+        </p>
+        <div style="max-height: 380px; overflow-y: auto;" id="emsReviewListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelEmsReviewBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmEmsReviewBtn">Confirm & List Products</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EMS LISTING RESULT                  -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="emsResultModal">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Listing Results</h3>
+        <button class="drawer-close-btn" id="closeEmsResultModalBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" id="emsResultList" style="display:flex; flex-direction:column; gap:0.65rem;">
+        <!-- List items rendered here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="dismissEmsResultBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- DRAWER: PRODUCT DETAILS                    -->
+  <!-- ========================================== -->
+  <div class="drawer-backdrop" id="productDrawerBackdrop">
+    <div class="drawer-panel" id="productDrawer">
+      <div class="drawer-header">
+        <h3 class="drawer-title" id="drawerProductTitle">Product Details</h3>
+        <button class="drawer-close-btn" id="closeProductDrawerBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-body" id="drawerProductBody">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- DRAWER: ORDER DETAILS                      -->
+  <!-- ========================================== -->
+  <div class="drawer-backdrop" id="orderDrawerBackdrop">
+    <div class="drawer-panel" id="orderDrawer">
+      <div class="drawer-header">
+        <h3 class="drawer-title" id="drawerOrderTitle">Order Details</h3>
+        <button class="drawer-close-btn" id="closeOrderDrawerBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-body" id="drawerOrderBody">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script>
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = `toast toast-${type}`;
+      el.textContent = message;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(10px)";
+        el.style.transition = "all 200ms ease";
+        setTimeout(() => el.remove(), 250);
+      }, 3500);
+    }
+
+    async function fetchApi(url, options = {}) {
+      try {
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+          }
+        });
+
+        if (res.status === 401) {
+          window.location.href = "/login.html";
+          return null;
+        }
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+        return data;
+      } catch (err) {
+        throw err;
+      }
+    }
+
+    const state = {
+      activeTab: "products",
+      shop: null,
+      products: [],
+      records: [],
+      ems: {
+        items: [],
+        total: 0,
+        page: 1,
+        limit: 50,
+        search: "",
+        selected: new Set(),
+        error: null
+      },
+      orders: {
+        items: [],
+        total: 0,
+        page: 1,
+        limit: 20,
+        search: "",
+        financial: "ALL",
+        fulfillment: "ALL"
+      },
+      currentDeleteProduct: null
+    };
+
+    function initNavigation() {
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tab = btn.getAttribute("data-tab");
+          switchTab(tab);
+        });
+      });
+
+      const mobileBtn = document.getElementById("mobileMenuBtn");
+      const sidebar = document.getElementById("appSidebar");
+      mobileBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("mobile-open");
+      });
+
+      const userBtn = document.getElementById("userMenuBtn");
+      const dropdown = document.getElementById("userDropdown");
+      userBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("show");
+      });
+      document.addEventListener("click", () => dropdown.classList.remove("show"));
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        window.location.href = "/auth/logout";
+      });
+
+      window.addEventListener("hashchange", () => {
+        const hash = window.location.hash.replace(/^#/, "");
+        if (["products", "ems", "orders", "records"].includes(hash)) {
+          switchTab(hash, false);
+        }
+      });
+
+      const initialHash = window.location.hash.replace(/^#/, "");
+      if (["products", "ems", "orders", "records"].includes(initialHash)) {
+        switchTab(initialHash, false);
+      } else {
+        switchTab("products", false);
+      }
+    }
+
+    function switchTab(tabName, updateHash = true) {
+      state.activeTab = tabName;
+      if (updateHash) {
+        window.location.hash = `#${tabName}`;
+      }
+
+      document.getElementById("appSidebar").classList.remove("mobile-open");
+
+      document.querySelectorAll(".nav-item").forEach((el) => {
+        el.classList.toggle("active", el.getAttribute("data-tab") === tabName);
+      });
+
+      document.querySelectorAll(".page-tab-pane").forEach((el) => {
+        el.classList.toggle("active", el.id === `pane-${tabName}`);
+      });
+
+      const titles = {
+        products: "Products",
+        ems: "List from EMS",
+        orders: "Orders",
+        records: "Audit Records"
+      };
+      document.getElementById("pageTitle").textContent = titles[tabName] || "EMS Shopify Store";
+
+      if (tabName === "products") loadProducts();
+      if (tabName === "ems") loadEmsProducts();
+      if (tabName === "orders") { loadOrders(); loadOrdersSummary(); }
+      if (tabName === "records") loadRecords();
+    }
+
+    async function loadHealth() {
+      try {
+        const data = await fetchApi("/api/health");
+        if (data?.shop) {
+          state.shop = data.shop;
+          document.getElementById("shopDomainText").textContent = `Connected to ${data.shop.name || data.shop.myshopifyDomain}`;
+        }
+      } catch (err) {
+        document.getElementById("shopDomainText").textContent = "Shopify offline";
+      }
+    }
+
+    /* 1) PRODUCTS VIEW */
+    async function loadProducts() {
+      const container = document.getElementById("productsGridContainer");
+      container.innerHTML = `<div class="skeleton" style="height: 280px; grid-column: 1/-1;"></div>`;
+
+      try {
+        const products = await fetchApi("/api/products?limit=50");
+        state.products = Array.isArray(products) ? products : [];
+        renderProducts();
+        updateProductSummaries();
+      } catch (err) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <div class="empty-state-title" style="color:var(--color-danger-text);">Failed to load products</div>
+            <div class="empty-state-text">${escapeHtml(err.message)}</div>
+            <button class="btn btn-secondary btn-sm" onclick="loadProducts()">Try Again</button>
+          </div>
+        `;
+      }
+    }
+
+    function updateProductSummaries() {
+      const total = state.products.length;
+      const active = state.products.filter((p) => p.status === "ACTIVE").length;
+      const draft = state.products.filter((p) => p.status === "DRAFT").length;
+
+      document.getElementById("prodSummaryTotal").textContent = total;
+      document.getElementById("prodSummaryActive").textContent = active;
+      document.getElementById("prodSummaryDraft").textContent = draft;
+    }
+
+    function renderProducts() {
+      const container = document.getElementById("productsGridContainer");
+      const search = (document.getElementById("prodSearchInput").value || "").toLowerCase().trim();
+      const statusFilter = document.getElementById("prodStatusFilter").value;
+
+      let filtered = state.products;
+
+      if (statusFilter !== "ALL") {
+        filtered = filtered.filter((p) => p.status === statusFilter);
+      }
+
+      if (search) {
+        filtered = filtered.filter((p) =>
+          (p.title && p.title.toLowerCase().includes(search)) ||
+          (p.vendor && p.vendor.toLowerCase().includes(search)) ||
+          (p.productType && p.productType.toLowerCase().includes(search))
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-width="2"/>
+            </svg>
+            <div class="empty-state-title">No products found</div>
+            <div class="empty-state-text">Try adjusting your search filter or add a new product.</div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map((p) => {
+        const img = p.images?.[0] || (typeof p.image === "string" ? p.image : null);
+        const imgHtml = img
+          ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(p.title)}" class="product-image" loading="lazy" />`
+          : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--text-subtle); background:var(--bg-subtle);">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+             </div>`;
+
+        const statusClass = p.status === "ACTIVE" ? "badge-success" : "badge-warning";
+        const emsBadge = p.emsId ? `<span class="badge badge-ems">EMS</span>` : "";
+
+        const storefrontBtn = p.storefrontUrl
+          ? `<a href="${escapeHtml(p.storefrontUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" onclick="event.stopPropagation();" title="View live on Shopify storefront">Store</a>`
+          : `<button class="btn btn-secondary btn-sm" disabled title="Publish first to view live" onclick="event.stopPropagation();">Store</button>`;
+
+        const previewBtn = p.previewUrl
+          ? `<a href="${escapeHtml(p.previewUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" onclick="event.stopPropagation();" title="Preview online store">Preview</a>`
+          : "";
+
+        const adminBtn = p.adminUrl
+          ? `<a href="${escapeHtml(p.adminUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" onclick="event.stopPropagation();" title="Open in Shopify admin">Admin</a>`
+          : "";
+
+        const nextStatus = p.status === "ACTIVE" ? "DRAFT" : "ACTIVE";
+        const toggleLabel = p.status === "ACTIVE" ? "Unpublish" : "Publish";
+
+        return `
+          <div class="product-card" onclick="openProductDrawer('${escapeHtml(p.id)}')">
+            <div class="product-image-container">
+              ${imgHtml}
+              <div class="product-badge-overlay">
+                <span class="badge ${statusClass}">${escapeHtml(p.status)}</span>
+                ${emsBadge}
+              </div>
+            </div>
+            <div class="product-card-body">
+              <div class="product-title" title="${escapeHtml(p.title)}">${escapeHtml(p.title)}</div>
+              <div class="product-meta-row">
+                <span class="product-vendor">${escapeHtml(p.vendor || "EMS Originals")}</span>
+                <span class="product-price">${escapeHtml(p.currency)} ${escapeHtml(p.price)}</span>
+              </div>
+            </div>
+            <div class="product-card-actions" onclick="event.stopPropagation();">
+              <div style="display:flex; gap:0.25rem;">
+                ${storefrontBtn}
+                ${previewBtn}
+                ${adminBtn}
+              </div>
+              <div style="display:flex; gap:0.25rem;">
+                <button class="btn btn-ghost btn-sm" onclick="toggleProductStatus('${escapeHtml(p.id)}', '${nextStatus}')">${toggleLabel}</button>
+                <button class="btn btn-ghost btn-sm" style="color:var(--color-danger-text);" onclick="promptDeleteProduct('${escapeHtml(p.id)}', '${escapeHtml(p.title)}')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function toggleProductStatus(id, newStatus) {
+      try {
+        await fetchApi("/api/products/status", {
+          method: "POST",
+          body: JSON.stringify({ id, status: newStatus })
+        });
+        showToast(`Product status updated to ${newStatus}`, "success");
+        loadProducts();
+      } catch (err) {
+        showToast(`Failed to update status: ${err.message}`, "error");
+      }
+    }
+
+    function promptDeleteProduct(id, title) {
+      state.currentDeleteProduct = { id, title };
+      document.getElementById("deleteConfirmText").textContent =
+        `Are you sure you want to permanently delete "${title}" from Shopify?`;
+      document.getElementById("deleteConfirmModal").classList.add("show");
+    }
+
+    async function executeDeleteProduct() {
+      if (!state.currentDeleteProduct) return;
+      const { id, title } = state.currentDeleteProduct;
+      try {
+        await fetchApi("/api/products", {
+          method: "DELETE",
+          body: JSON.stringify({ id, title })
+        });
+        showToast("Product deleted successfully", "success");
+        document.getElementById("deleteConfirmModal").classList.remove("show");
+        state.currentDeleteProduct = null;
+        loadProducts();
+      } catch (err) {
+        showToast(`Failed to delete: ${err.message}`, "error");
+      }
+    }
+
+    /* Safe HTML Sanitizer for Descriptions */
+    function sanitizeHtmlSafe(dirty) {
+      if (!dirty) return "";
+      const allowedTags = ["P", "BR", "B", "STRONG", "I", "EM", "UL", "OL", "LI", "H2", "H3", "A"];
+      const doc = new DOMParser().parseFromString(dirty, "text/html");
+
+      function cleanNode(node) {
+        const children = Array.from(node.childNodes);
+        for (const child of children) {
+          if (child.nodeType === Node.ELEMENT_NODE) {
+            if (!allowedTags.includes(child.tagName)) {
+              const text = document.createTextNode(child.textContent);
+              node.replaceChild(text, child);
+            } else {
+              const attrs = Array.from(child.attributes);
+              for (const attr of attrs) {
+                if (child.tagName === "A" && attr.name === "href") {
+                  const val = attr.value.trim();
+                  if (!val.startsWith("http://") && !val.startsWith("https://")) {
+                    child.removeAttribute(attr.name);
+                  }
+                } else {
+                  child.removeAttribute(attr.name);
+                }
+              }
+              if (child.tagName === "A") {
+                child.setAttribute("target", "_blank");
+                child.setAttribute("rel", "noopener noreferrer");
+              }
+              cleanNode(child);
+            }
+          }
+        }
+      }
+
+      cleanNode(doc.body);
+      return doc.body.innerHTML;
+    }
+
+    /* Client-side Image Resizing */
+    function resizeImageFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 2000;
+
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const mime = file.type === "image/png" ? "image/png" : "image/jpeg";
+            const quality = 0.85;
+            const dataUrl = canvas.toDataURL(mime, quality);
+            resolve(dataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* Image Management State for Add & Edit Modals */
+    const imageUploadState = {
+      add: [], // Array of { id, src, isPrimary }
+      editNew: [], // Array of { id, src }
+      editExisting: [] // Array of { id, url, toRemove: boolean }
+    };
+
+    function renderAddImageThumbs() {
+      const container = document.getElementById("addImgThumbGrid");
+      if (!container) return;
+
+      container.innerHTML = imageUploadState.add.map((img, idx) => {
+        return `
+          <div class="image-thumb-card ${img.isPrimary ? 'is-primary' : ''}">
+            <img src="${escapeHtml(img.src)}" alt="Thumb" />
+            ${img.isPrimary ? '<span class="thumb-primary-badge">Primary</span>' : ''}
+            <button type="button" class="thumb-remove-btn" onclick="removeAddImage(${idx})" title="Remove">✕</button>
+            ${!img.isPrimary ? `<button type="button" class="thumb-make-primary-btn" onclick="makeAddImagePrimary(${idx})">Set Main</button>` : ''}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function removeAddImage(idx) {
+      const wasPrimary = imageUploadState.add[idx]?.isPrimary;
+      imageUploadState.add.splice(idx, 1);
+      if (wasPrimary && imageUploadState.add.length > 0) {
+        imageUploadState.add[0].isPrimary = true;
+      }
+      renderAddImageThumbs();
+    }
+
+    function makeAddImagePrimary(idx) {
+      imageUploadState.add.forEach((item, i) => {
+        item.isPrimary = i === idx;
+      });
+      renderAddImageThumbs();
+    }
+
+    function renderEditImageThumbs() {
+      const existCont = document.getElementById("editExistingThumbGrid");
+      const newCont = document.getElementById("editNewThumbGrid");
+
+      if (existCont) {
+        if (imageUploadState.editExisting.length === 0) {
+          document.getElementById("editExistingImagesSection").style.display = "none";
+        } else {
+          document.getElementById("editExistingImagesSection").style.display = "block";
+          existCont.innerHTML = imageUploadState.editExisting.map((item, idx) => {
+            return `
+              <div class="image-thumb-card" style="${item.toRemove ? 'opacity:0.35; filter:grayscale(1); border-color:var(--color-danger);' : ''}">
+                <img src="${escapeHtml(item.url)}" alt="Existing image" />
+                <button type="button" class="thumb-remove-btn" onclick="toggleRemoveExistingMedia(${idx})" title="${item.toRemove ? 'Undo removal' : 'Remove media'}">
+                  ${item.toRemove ? '↺' : '✕'}
+                </button>
+                ${item.toRemove ? '<span style="position:absolute; bottom:2px; left:2px; font-size:8px; background:var(--color-danger); color:#fff; padding:1px 3px; border-radius:3px;">Delete</span>' : ''}
+              </div>
+            `;
+          }).join("");
+        }
+      }
+
+      if (newCont) {
+        newCont.innerHTML = imageUploadState.editNew.map((img, idx) => {
+          return `
+            <div class="image-thumb-card">
+              <img src="${escapeHtml(img.src)}" alt="New thumb" />
+              <button type="button" class="thumb-remove-btn" onclick="removeEditNewImage(${idx})" title="Remove">✕</button>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+
+    function toggleRemoveExistingMedia(idx) {
+      if (imageUploadState.editExisting[idx]) {
+        imageUploadState.editExisting[idx].toRemove = !imageUploadState.editExisting[idx].toRemove;
+        renderEditImageThumbs();
+      }
+    }
+
+    function removeEditNewImage(idx) {
+      imageUploadState.editNew.splice(idx, 1);
+      renderEditImageThumbs();
+    }
+
+    async function handleIncomingFiles(files, targetMode = "add") {
+      for (const file of files) {
+        if (file.type && file.type.startsWith("image/")) {
+          try {
+            const dataUrl = await resizeImageFile(file);
+            if (targetMode === "add") {
+              const isFirst = imageUploadState.add.length === 0;
+              imageUploadState.add.push({
+                id: `img_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+                src: dataUrl,
+                isPrimary: isFirst
+              });
+              renderAddImageThumbs();
+            } else {
+              imageUploadState.editNew.push({
+                id: `img_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+                src: dataUrl
+              });
+              renderEditImageThumbs();
+            }
+          } catch (err) {
+            showToast(`Failed to process image: ${err.message}`, "error");
+          }
+        }
+      }
+    }
+
+    /* Product Details & In-App Preview Drawer */
+    let currentDrawerProductId = null;
+
+    async function openProductDrawer(id) {
+      const p = state.products.find((item) => item.id === id);
+      if (!p) return;
+
+      currentDrawerProductId = p.id;
+      document.getElementById("drawerProductTitle").textContent = p.title;
+      const body = document.getElementById("drawerProductBody");
+
+      const images = Array.isArray(p.images) && p.images.length > 0
+        ? p.images
+        : (p.image ? [p.image] : []);
+
+      const primaryImg = images[0] || null;
+
+      let galleryHtml = "";
+      if (primaryImg) {
+        const thumbsHtml = images.length > 1
+          ? `
+            <div class="preview-thumbs-row">
+              ${images.map((img, i) => `
+                <button type="button" class="preview-thumb-btn ${i === 0 ? 'active' : ''}" onclick="switchDrawerHeroImage('${escapeHtml(img)}', this)">
+                  <img src="${escapeHtml(img)}" alt="Thumb ${i+1}" />
+                </button>
+              `).join("")}
+            </div>
+          `
+          : "";
+
+        galleryHtml = `
+          <div class="preview-hero-container" id="drawerHeroContainer">
+            <img src="${escapeHtml(primaryImg)}" alt="${escapeHtml(p.title)}" class="preview-hero-img" id="drawerHeroImg" />
+          </div>
+          ${thumbsHtml}
+        `;
+      } else {
+        galleryHtml = `
+          <div class="preview-hero-container">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-subtle);">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              <span style="font-size:0.8rem;">No product images uploaded</span>
+            </div>
+          </div>
+        `;
+      }
+
+      const safeDescriptionHtml = sanitizeHtmlSafe(p.descriptionHtml) || '<span style="color:var(--text-muted); font-size:0.85rem;">No description provided.</span>';
+
+      let historyRecords = [];
+      try {
+        const records = await fetchApi("/api/records?limit=100");
+        historyRecords = (records || []).filter((r) => r.shopifyId === p.id || (p.emsId && r.emsId === p.emsId));
+      } catch {}
+
+      const historyHtml = historyRecords.length > 0
+        ? historyRecords.map((r) => `
+            <div style="font-size:0.8rem; padding:0.45rem 0; border-bottom:1px solid var(--border-subtle);">
+              <strong style="color:#c7d2fe;">${escapeHtml(r.action)}</strong> by ${escapeHtml(r.user || "staff")} on ${new Date(r.timestamp).toLocaleString()}
+              ${r.note ? `<div style="color:var(--text-muted); font-size:0.75rem;">${escapeHtml(r.note)}</div>` : ""}
+            </div>
+          `).join("")
+        : `<span style="font-size:0.8rem; color:var(--text-muted);">No activity records found.</span>`;
+
+      body.innerHTML = `
+        ${galleryHtml}
+
+        <!-- Live Link Status & Actions Bar -->
+        <div class="link-check-card">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">Store Link Status:</span>
+              <span id="drawerLinkStatusPill" class="link-status-pill ${p.status === 'ACTIVE' ? 'link-status-live' : 'link-status-draft'}">
+                ${p.status === 'ACTIVE' ? '● Ready for Check' : '○ Draft'}
+              </span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="runLinkCheckBtn" onclick="runProductLinkCheck('${escapeHtml(p.id)}')">
+              Check Link Status
+            </button>
+          </div>
+          <div id="drawerLinkCheckNotice" style="font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+            ${p.status === 'ACTIVE'
+              ? 'Click "Check Link Status" to test storefront accessibility and detect development store password protection.'
+              : 'This product is currently in Draft status. Publish it to make it live on the storefront.'}
+          </div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem; margin-top:0.85rem;">
+          ${p.storefrontUrl
+            ? `<a href="${escapeHtml(p.storefrontUrl)}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Open on Storefront ↗</a>`
+            : `<button class="btn btn-secondary btn-sm" disabled title="Publish product to open live storefront">Storefront (Draft)</button>`}
+          ${p.previewUrl
+            ? `<a href="${escapeHtml(p.previewUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Shopify Preview ↗</a>`
+            : ''}
+          ${p.adminUrl
+            ? `<a href="${escapeHtml(p.adminUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Open in Admin ↗</a>`
+            : ''}
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openEditProductModal('${escapeHtml(p.id)}')">Edit Product</button>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">Overview</span>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.65rem; font-size:0.85rem;">
+            <div><strong style="color:var(--text-muted);">Status:</strong> <span class="badge ${p.status === 'ACTIVE' ? 'badge-success' : 'badge-warning'}">${escapeHtml(p.status)}</span></div>
+            <div><strong style="color:var(--text-muted);">Price:</strong> ${escapeHtml(p.currency)} ${escapeHtml(p.price)}</div>
+            <div><strong style="color:var(--text-muted);">Vendor:</strong> ${escapeHtml(p.vendor || "-")}</div>
+            <div><strong style="color:var(--text-muted);">Type:</strong> ${escapeHtml(p.productType || "-")}</div>
+            <div><strong style="color:var(--text-muted);">Variants:</strong> ${escapeHtml(p.variantsCount || 1)}</div>
+            <div><strong style="color:var(--text-muted);">EMS ID:</strong> ${p.emsId ? escapeHtml(p.emsId) : '<span style="color:var(--text-subtle);">None</span>'}</div>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">Tags</span>
+          <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+            ${(p.tags && p.tags.length > 0) ? p.tags.map(t => `<span class="badge badge-neutral">${escapeHtml(t)}</span>`).join("") : '<span style="font-size:0.8rem; color:var(--text-muted);">No tags</span>'}
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">Description</span>
+          <div class="product-description-safe">${safeDescriptionHtml}</div>
+        </div>
+
+        <div class="drawer-section">
+          <span class="drawer-section-title">Audit Trail</span>
+          <div style="display:flex; flex-direction:column;">
+            ${historyHtml}
+          </div>
+        </div>
+      `;
+
+      document.getElementById("productDrawerBackdrop").classList.add("show");
+    }
+
+    function switchDrawerHeroImage(newUrl, btn) {
+      const hero = document.getElementById("drawerHeroImg");
+      if (hero) {
+        hero.style.opacity = "0.4";
+        hero.src = newUrl;
+        setTimeout(() => { hero.style.opacity = "1"; }, 100);
+      }
+      document.querySelectorAll(".preview-thumb-btn").forEach((el) => el.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+
+    async function runProductLinkCheck(productId) {
+      const pill = document.getElementById("drawerLinkStatusPill");
+      const notice = document.getElementById("drawerLinkCheckNotice");
+      const btn = document.getElementById("runLinkCheckBtn");
+
+      if (btn) { btn.disabled = true; btn.textContent = "Checking..."; }
+      if (pill) {
+        pill.className = "link-status-pill link-status-draft";
+        pill.textContent = "Checking live...";
+      }
+
+      try {
+        const res = await fetchApi(`/api/products/${encodeURIComponent(productId)}/link-check`);
+        const check = res?.check;
+
+        if (check?.redirectedToPassword) {
+          pill.className = "link-status-pill link-status-protected";
+          pill.textContent = "🔒 Password Protected";
+          notice.innerHTML = `
+            <strong>Shopify Trial/Development Store:</strong> The store is password-protected.
+            <div style="margin-top:0.35rem;">
+              • To view in browser: Click <strong>"Enter using password"</strong> on Shopify, or log into Shopify Admin.<br />
+              • Or click <strong>"Open in Admin"</strong> above to inspect in Shopify Admin directly.
+            </div>
+          `;
+        } else if (check?.reachable) {
+          pill.className = "link-status-pill link-status-live";
+          pill.textContent = "✓ Live (HTTP 200 OK)";
+          notice.textContent = "The online store link is publicly reachable and functioning normally.";
+        } else {
+          pill.className = "link-status-pill link-status-draft";
+          pill.textContent = "Draft / Offline";
+          notice.textContent = check?.message || "Storefront URL is currently unreachable or product is in Draft.";
+        }
+      } catch (err) {
+        pill.className = "link-status-pill link-status-draft";
+        pill.textContent = "Check Failed";
+        notice.textContent = `Could not verify link: ${err.message}`;
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = "Check Link Status"; }
+      }
+    }
+
+    /* Edit Product Modal */
+    async function openEditProductModal(id) {
+      const p = state.products.find((item) => item.id === id);
+      if (!p) return;
+
+      document.getElementById("editProductId").value = p.id;
+      document.getElementById("editTitle").value = p.title || "";
+      document.getElementById("editVendor").value = p.vendor || "";
+      document.getElementById("editProductType").value = p.productType || "";
+      document.getElementById("editPrice").value = p.price || "";
+      document.getElementById("editStatus").value = p.status || "DRAFT";
+      document.getElementById("editTags").value = Array.isArray(p.tags) ? p.tags.join(", ") : "";
+
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = p.descriptionHtml || "";
+      document.getElementById("editDescription").value = tempDiv.textContent || tempDiv.innerText || "";
+
+      // Existing images setup
+      imageUploadState.editExisting = (p.images || []).map((url, i) => ({
+        id: `media_${i}`,
+        url,
+        toRemove: false
+      }));
+      imageUploadState.editNew = [];
+      renderEditImageThumbs();
+
+      document.getElementById("editProductModal").classList.add("show");
+    }
+
+    /* EMS Review & Edit Modal */
+    function openEmsReviewModal() {
+      const selectedIds = Array.from(state.ems.selected);
+      if (selectedIds.length === 0) return;
+
+      const items = state.ems.items.filter((item) => selectedIds.includes(item.emsId));
+      const targetStatus = document.getElementById("emsTargetStatusSelect").value;
+      const container = document.getElementById("emsReviewListContainer");
+
+      container.innerHTML = `
+        <table class="ems-review-table">
+          <thead>
+            <tr>
+              <th style="width:48px;">Thumb</th>
+              <th>Product Title</th>
+              <th style="width:100px;">Price ($)</th>
+              <th style="width:120px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items.map((item, idx) => `
+              <tr data-ems-id="${escapeHtml(item.emsId)}">
+                <td>
+                  ${item.imageUrl
+                    ? `<img src="${escapeHtml(item.imageUrl)}" style="width:40px; height:40px; object-fit:cover; border-radius:var(--radius-sm);" />`
+                    : `<div style="width:40px; height:40px; background:var(--bg-subtle); border-radius:var(--radius-sm);"></div>`}
+                </td>
+                <td>
+                  <input type="text" class="form-input form-input-sm ems-review-title" value="${escapeHtml(item.title)}" />
+                  <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Vendor: ${escapeHtml(item.brand || item.vendor || "EMS")}</div>
+                </td>
+                <td>
+                  <input type="number" step="0.01" min="0" class="form-input form-input-sm ems-review-price" value="${escapeHtml(item.price || '0.00')}" />
+                </td>
+                <td>
+                  <select class="form-select form-select-sm ems-review-status">
+                    <option value="DRAFT" ${targetStatus === 'DRAFT' ? 'selected' : ''}>Draft</option>
+                    <option value="ACTIVE" ${targetStatus === 'ACTIVE' ? 'selected' : ''}>Active</option>
+                  </select>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById("confirmEmsReviewBtn").textContent = `Confirm & List (${items.length}) Products`;
+      document.getElementById("emsReviewModal").classList.add("show");
+    }
+
+    async function executeEmsListingFromReview() {
+      const rows = document.querySelectorAll("#emsReviewListContainer tbody tr");
+      const itemsToList = [];
+
+      rows.forEach((row) => {
+        const emsId = row.getAttribute("data-ems-id");
+        const original = state.ems.items.find((item) => String(item.emsId) === String(emsId));
+        if (original) {
+          const customTitle = row.querySelector(".ems-review-title").value.trim() || original.title;
+          const customPrice = row.querySelector(".ems-review-price").value.trim() || original.price;
+          const customStatus = row.querySelector(".ems-review-status").value;
+
+          itemsToList.push({
+            ...original,
+            title: customTitle,
+            price: customPrice,
+            targetStatus: customStatus
+          });
+        }
+      });
+
+      if (itemsToList.length === 0) return;
+
+      const confirmBtn = document.getElementById("confirmEmsReviewBtn");
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = "Listing products...";
+
+      try {
+        const results = await fetchApi("/api/ems/list", {
+          method: "POST",
+          body: JSON.stringify({
+            items: itemsToList,
+            status: itemsToList[0]?.targetStatus || "DRAFT"
+          })
+        });
+
+        document.getElementById("emsReviewModal").classList.remove("show");
+
+        const listContainer = document.getElementById("emsResultList");
+        listContainer.innerHTML = (results || []).map((r) => {
+          if (r.ok) {
+            const viewLink = r.storefrontUrl || r.adminUrl || r.previewUrl;
+            return `
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.65rem 0.85rem; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.25); border-radius:var(--radius-md); font-size:0.85rem;">
+                <span style="color:#34d399; font-weight:700;">✓ ${escapeHtml(r.title)}</span>
+                ${viewLink ? `<a href="${escapeHtml(viewLink)}" target="_blank" rel="noopener" style="font-size:0.8rem; font-weight:700;">View on Shopify</a>` : ""}
+              </div>
+            `;
+          } else {
+            return `
+              <div style="padding:0.65rem 0.85rem; background:rgba(239, 68, 68, 0.12); border:1px solid rgba(239, 68, 68, 0.25); border-radius:var(--radius-md); font-size:0.85rem; color:#f87171;">
+                <strong>✗ ${escapeHtml(r.title)}:</strong> ${escapeHtml(r.error)}
+              </div>
+            `;
+          }
+        }).join("");
+
+        document.getElementById("emsResultModal").classList.add("show");
+        state.ems.selected.clear();
+        updateEmsStickyBar();
+        loadEmsProducts();
+      } catch (err) {
+        showToast(`Listing failed: ${err.message}`, "error");
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "Confirm & List Products";
+      }
+    }
+
+    /* 2) EMS CATALOG VIEW */
+    async function loadEmsProducts() {
+      const tbody = document.getElementById("emsTableBody");
+      const errorContainer = document.getElementById("emsErrorContainer");
+      const tableCard = document.getElementById("emsTableCard");
+
+      if (errorContainer) errorContainer.style.display = "none";
+      if (tableCard) tableCard.style.display = "block";
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2.5rem;"><div class="skeleton" style="height:36px; width:85%; margin:0 auto;"></div></td></tr>`;
+
+      const search = state.ems.search || "";
+      const limit = state.ems.limit || 50;
+      const offset = (state.ems.page - 1) * limit;
+
+      try {
+        const url = `/api/ems/products?search=${encodeURIComponent(search)}&limit=${limit}&offset=${offset}`;
+        const res = await fetchApi(url);
+
+        state.ems.items = Array.isArray(res?.items) ? res.items : [];
+        state.ems.total = Number(res?.total) || 0;
+        state.ems.error = null;
+
+        renderEmsTable();
+        updateEmsPagination();
+      } catch (err) {
+        state.ems.error = err.message;
+        if (errorContainer) {
+          errorContainer.style.display = "block";
+          document.getElementById("emsErrorMessage").textContent = err.message || "Failed to connect to EMS database.";
+        }
+        if (tableCard) tableCard.style.display = "none";
+      }
+    }
+
+    function renderEmsTable() {
+      const tbody = document.getElementById("emsTableBody");
+      const items = state.ems.items;
+
+      if (!items || items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center; padding: 3.5rem 1rem;">
+              <div class="empty-state">
+                <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-width="2"/>
+                </svg>
+                <div class="empty-state-title">No EMS Products Found</div>
+                <div class="empty-state-text">No products in the database match your criteria.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        document.getElementById("emsMasterCheckbox").checked = false;
+        updateEmsStickyBar();
+        return;
+      }
+
+      const unlistedItems = items.filter((item) => !item.alreadyListed);
+      const allSelected = unlistedItems.length > 0 && unlistedItems.every((item) => state.ems.selected.has(item.emsId));
+      document.getElementById("emsMasterCheckbox").checked = allSelected;
+
+      tbody.innerHTML = items.map((item) => {
+        const isSelected = state.ems.selected.has(item.emsId);
+        const imgHtml = item.imageUrl
+          ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" class="table-thumb" loading="lazy" />`
+          : `<div class="table-thumb" style="display:flex; align-items:center; justify-content:center; color:var(--text-subtle);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+             </div>`;
+
+        let statusBadge = `<span class="badge badge-neutral">Not Listed</span>`;
+        if (item.alreadyListed) {
+          const viewLink = item.adminUrl || item.storefrontUrl;
+          statusBadge = `
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <span class="badge badge-success">Listed</span>
+              ${viewLink ? `<a href="${escapeHtml(viewLink)}" target="_blank" rel="noopener" style="font-size:0.75rem; color:#60a5fa; font-weight:600;">Shopify ↗</a>` : ""}
+            </div>
+          `;
+        }
+
+        return `
+          <tr class="${item.alreadyListed ? 'row-disabled' : ''}">
+            <td style="text-align: center;">
+              <input type="checkbox"
+                ${item.alreadyListed ? 'disabled' : ''}
+                ${isSelected ? 'checked' : ''}
+                onchange="toggleEmsSelect('${escapeHtml(item.emsId)}', this.checked)"
+              />
+            </td>
+            <td>${imgHtml}</td>
+            <td>
+              <div style="font-weight:700; color:#ffffff;">${escapeHtml(item.title)}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(item.brand || item.vendor || "EMS Originals")}</div>
+            </td>
+            <td>
+              <div style="font-size:0.8rem; color:var(--text-secondary);">${escapeHtml(item.sku || "-")}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(item.category || item.productType || "")}</div>
+            </td>
+            <td style="font-weight:700; color:#ffffff;">PKR ${escapeHtml(item.price)}</td>
+            <td style="font-size:0.85rem; color:var(--text-secondary);">${escapeHtml(item.stock || "1")}</td>
+            <td>${statusBadge}</td>
+          </tr>
+        `;
+      }).join("");
+
+      updateEmsStickyBar();
+    }
+
+    /* EMS Selection & Table Controls */
+    function toggleEmsSelect(emsId, isSelected) {
+      if (isSelected) {
+        state.ems.selected.add(emsId);
+      } else {
+        state.ems.selected.delete(emsId);
+      }
+      updateEmsStickyBar();
+    }
+
+    function updateEmsStickyBar() {
+      const bar = document.getElementById("emsStickyBar");
+      const countLabel = document.getElementById("emsSelectedCountLabel");
+      const count = state.ems.selected.size;
+
+      if (count > 0) {
+        countLabel.textContent = `${count} selected`;
+        bar.classList.add("show");
+      } else {
+        bar.classList.remove("show");
+      }
+    }
+
+    function updateEmsPagination() {
+      const start = state.ems.total > 0 ? (state.ems.page - 1) * state.ems.limit + 1 : 0;
+      const end = Math.min(state.ems.page * state.ems.limit, state.ems.total);
+      const totalPages = Math.ceil(state.ems.total / state.ems.limit) || 1;
+
+      document.getElementById("emsPageInfo").textContent = `Showing ${start}-${end} of ${state.ems.total} items`;
+      document.getElementById("emsCurrentPageLabel").textContent = `Page ${state.ems.page} of ${totalPages}`;
+      document.getElementById("emsPrevPageBtn").disabled = state.ems.page <= 1;
+      document.getElementById("emsNextPageBtn").disabled = state.ems.page >= totalPages;
+    }
+
+    /* 3) ORDERS VIEW */
+    async function loadOrders() {
+      const tbody = document.getElementById("ordersTableBody");
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2.5rem;"><div class="skeleton" style="height:36px; width:80%; margin:0 auto;"></div></td></tr>`;
+
+      const search = (document.getElementById("orderSearchInput").value || "").trim();
+      const financial = document.getElementById("orderFinancialFilter").value;
+      const fulfillment = document.getElementById("orderFulfillmentFilter").value;
+      const offset = (state.orders.page - 1) * state.orders.limit;
+
+      try {
+        const url = `/api/orders?search=${encodeURIComponent(search)}&financial=${financial}&fulfillment=${fulfillment}&limit=${state.orders.limit}&offset=${offset}`;
+        const res = await fetchApi(url);
+
+        state.orders.items = res?.items || [];
+        state.orders.total = res?.total || 0;
+
+        if (res?.meta?.customerDataRestricted) {
+          document.getElementById("customerDataNotice").style.display = "block";
+        }
+
+        renderOrdersTable();
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--color-danger-text);">${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    async function loadOrdersSummary() {
+      try {
+        const sum = await fetchApi("/api/orders/summary");
+        if (sum) {
+          document.getElementById("orderSummaryTotal").textContent = sum.total;
+          document.getElementById("orderSummaryUnfulfilled").textContent = sum.unfulfilled;
+          document.getElementById("orderSummaryPaid").textContent = sum.paid;
+          document.getElementById("orderSummaryRevenue").textContent = `$${sum.todayRevenue}`;
+          if (sum.lastSync) {
+            document.getElementById("orderLastSyncLabel").textContent = `Last synced: ${new Date(sum.lastSync).toLocaleTimeString()}`;
+          }
+        }
+      } catch {}
+    }
+
+    async function triggerOrdersSync() {
+      const btn = document.getElementById("syncOrdersBtn");
+      btn.disabled = true;
+      btn.textContent = "Syncing...";
+
+      try {
+        await fetchApi("/api/orders/sync", { method: "POST" });
+        showToast("Orders synced from Shopify", "success");
+        loadOrders();
+        loadOrdersSummary();
+      } catch (err) {
+        showToast(`Sync warning: ${err.message}`, "error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Sync now";
+      }
+    }
+
+    function renderOrdersTable() {
+      const tbody = document.getElementById("ordersTableBody");
+      const items = state.orders.items;
+
+      if (items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align:center; padding: 3.5rem 1rem;">
+              <div class="empty-state">
+                <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="9" cy="21" r="1" stroke-width="2"/>
+                  <circle cx="20" cy="21" r="1" stroke-width="2"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-width="2"/>
+                </svg>
+                <div class="empty-state-title">No Orders Found</div>
+                <div class="empty-state-text">No Shopify orders match your filters.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        updateOrderPagination();
+        return;
+      }
+
+      tbody.innerHTML = items.map((o) => {
+        const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleString() : "-";
+        const customerName = o.customer?.displayName || "Guest";
+        const customerPhone = o.customer?.phone || o.shippingAddress?.phone || "";
+        const city = o.shippingAddress?.city || "-";
+        const itemsSummary = `${o.lineItems?.length || 0} items`;
+
+        const payBadgeClass = o.displayFinancialStatus === "PAID" ? "badge-success" : (o.displayFinancialStatus === "REFUNDED" ? "badge-danger" : "badge-warning");
+        const fulBadgeClass = o.displayFulfillmentStatus === "FULFILLED" ? "badge-info" : "badge-warning";
+
+        return `
+          <tr class="clickable" onclick="openOrderDrawer('${escapeHtml(o.id)}')">
+            <td style="font-weight:700; color:#ffffff;">${escapeHtml(o.name || o.numericId)}</td>
+            <td style="font-size:0.8rem; color:var(--text-muted);">${escapeHtml(dateStr)}</td>
+            <td>
+              <div style="font-weight:600; color:var(--text-main);">${escapeHtml(customerName)}</div>
+              ${customerPhone ? `<div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(customerPhone)}</div>` : ""}
+            </td>
+            <td>${escapeHtml(itemsSummary)}</td>
+            <td style="font-weight:700; color:#ffffff;">${escapeHtml(o.currency)} ${escapeHtml(o.total)}</td>
+            <td><span class="badge ${payBadgeClass}">${escapeHtml(o.displayFinancialStatus || "PENDING")}</span></td>
+            <td><span class="badge ${fulBadgeClass}">${escapeHtml(o.displayFulfillmentStatus || "UNFULFILLED")}</span></td>
+            <td>${escapeHtml(city)}</td>
+          </tr>
+        `;
+      }).join("");
+
+      updateOrderPagination();
+    }
+
+    function updateOrderPagination() {
+      const start = state.orders.total > 0 ? (state.orders.page - 1) * state.orders.limit + 1 : 0;
+      const end = Math.min(state.orders.page * state.orders.limit, state.orders.total);
+      const totalPages = Math.ceil(state.orders.total / state.orders.limit) || 1;
+
+      document.getElementById("orderPageInfo").textContent = `Showing ${start}-${end} of ${state.orders.total} orders`;
+      document.getElementById("orderCurrentPageLabel").textContent = `Page ${state.orders.page} of ${totalPages}`;
+      document.getElementById("orderPrevPageBtn").disabled = state.orders.page <= 1;
+      document.getElementById("orderNextPageBtn").disabled = state.orders.page >= totalPages;
+    }
+
+    async function openOrderDrawer(id) {
+      try {
+        const o = await fetchApi(`/api/orders/${encodeURIComponent(id)}`);
+        if (!o) return;
+
+        document.getElementById("drawerOrderTitle").textContent = `Order ${o.name || o.numericId}`;
+        const body = document.getElementById("drawerOrderBody");
+
+        const rawPhone = o.customer?.phone || o.shippingAddress?.phone || "";
+        const cleanDigits = rawPhone.replace(/\D/g, "");
+        const waLink = cleanDigits ? `https://wa.me/${cleanDigits}` : null;
+
+        const customerHtml = o.customer ? `
+          <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.85rem;">
+            <div><strong style="color:var(--text-muted);">Name:</strong> ${escapeHtml(o.customer.displayName || "-")}</div>
+            <div><strong style="color:var(--text-muted);">Email:</strong> ${o.customer.email ? `<a href="mailto:${escapeHtml(o.customer.email)}">${escapeHtml(o.customer.email)}</a>` : "-"}</div>
+            <div><strong style="color:var(--text-muted);">Phone:</strong> ${rawPhone ? `<a href="tel:${escapeHtml(rawPhone)}">${escapeHtml(rawPhone)}</a>` : "-"}</div>
+            ${waLink ? `<div><strong style="color:var(--text-muted);">WhatsApp:</strong> <a href="${escapeHtml(waLink)}" target="_blank" rel="noopener" style="color:#25d366; font-weight:700;">Chat on WhatsApp</a></div>` : ""}
+          </div>
+        ` : `<span style="font-size:0.85rem; color:var(--text-muted);">Customer details not available.</span>`;
+
+        const s = o.shippingAddress;
+        const shippingHtml = s ? `
+          <div style="font-size:0.85rem; line-height:1.5;">
+            <div style="font-weight:600; color:#ffffff;">${escapeHtml(s.name || "")}</div>
+            <div>${escapeHtml(s.address1 || "")} ${escapeHtml(s.address2 || "")}</div>
+            <div>${escapeHtml(s.city || "")}, ${escapeHtml(s.province || "")} ${escapeHtml(s.zip || "")}</div>
+            <div>${escapeHtml(s.country || "")}</div>
+          </div>
+        ` : `<span style="font-size:0.85rem; color:var(--text-muted);">No shipping address recorded.</span>`;
+
+        const itemsHtml = (o.lineItems || []).map((li) => `
+          <div style="display:flex; align-items:center; gap:0.85rem; padding:0.65rem 0; border-bottom:1px solid var(--border-subtle); font-size:0.85rem;">
+            ${li.imageUrl ? `<img src="${escapeHtml(li.imageUrl)}" style="width:42px; height:42px; border-radius:var(--radius-sm); object-fit:cover;" />` : `<div style="width:42px; height:42px; background:var(--bg-subtle); border-radius:var(--radius-sm);"></div>`}
+            <div style="flex:1;">
+              <div style="font-weight:700; color:#ffffff;">${escapeHtml(li.title)}</div>
+              ${li.variantTitle ? `<div style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(li.variantTitle)}</div>` : ""}
+              ${li.sku ? `<div style="font-size:0.75rem; color:var(--text-subtle);">SKU: ${escapeHtml(li.sku)}</div>` : ""}
+            </div>
+            <div style="text-align:right;">
+              <div>${escapeHtml(li.quantity)} x $${escapeHtml(li.unitPrice)}</div>
+              <div style="font-weight:700; color:#ffffff;">${escapeHtml(o.currency)} ${escapeHtml(li.lineTotal)}</div>
+            </div>
+          </div>
+        `).join("");
+
+        body.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:0.5rem;">
+              <span class="badge ${o.displayFinancialStatus === 'PAID' ? 'badge-success' : 'badge-warning'}">${escapeHtml(o.displayFinancialStatus)}</span>
+              <span class="badge ${o.displayFulfillmentStatus === 'FULFILLED' ? 'badge-info' : 'badge-warning'}">${escapeHtml(o.displayFulfillmentStatus)}</span>
+            </div>
+            ${o.adminUrl ? `<a href="${escapeHtml(o.adminUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Open in Shopify admin</a>` : ""}
+          </div>
+
+          <div class="drawer-section">
+            <span class="drawer-section-title">Customer Contact</span>
+            ${customerHtml}
+          </div>
+
+          <div class="drawer-section">
+            <span class="drawer-section-title">Shipping Address</span>
+            ${shippingHtml}
+          </div>
+
+          <div class="drawer-section">
+            <span class="drawer-section-title">Line Items</span>
+            <div>${itemsHtml || '<span style="font-size:0.85rem; color:var(--text-muted);">No line items.</span>'}</div>
+          </div>
+
+          <div class="drawer-section">
+            <span class="drawer-section-title">Financial Breakdown</span>
+            <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.85rem;">
+              <div style="display:flex; justify-content:space-between;"><span>Subtotal:</span><span>${escapeHtml(o.currency)} ${escapeHtml(o.subtotal || "0.00")}</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Shipping:</span><span>${escapeHtml(o.currency)} ${escapeHtml(o.shipping || "0.00")}</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Tax:</span><span>${escapeHtml(o.currency)} ${escapeHtml(o.tax || "0.00")}</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Discounts:</span><span>-${escapeHtml(o.currency)} ${escapeHtml(o.discounts || "0.00")}</span></div>
+              <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem; color:#ffffff; padding-top:0.65rem; border-top:1px solid var(--border-subtle);">
+                <span>Total:</span><span>${escapeHtml(o.currency)} ${escapeHtml(o.total)}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <span class="drawer-section-title">Metadata</span>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; font-size:0.8rem; color:var(--text-secondary);">
+              <div><strong>Gateway:</strong> ${escapeHtml(o.paymentGatewayNames?.join(", ") || "-")}</div>
+              <div><strong>Source:</strong> ${escapeHtml(o.sourceName || "web")}</div>
+              <div><strong>Created:</strong> ${new Date(o.createdAt).toLocaleString()}</div>
+              <div><strong>Synced At:</strong> ${o.syncedAt ? new Date(o.syncedAt).toLocaleTimeString() : "-"}</div>
+            </div>
+            ${o.note ? `<div style="margin-top:0.5rem; font-size:0.85rem;"><strong>Note:</strong> ${escapeHtml(o.note)}</div>` : ""}
+          </div>
+        `;
+
+        document.getElementById("orderDrawerBackdrop").classList.add("show");
+      } catch (err) {
+        showToast(`Could not load order: ${err.message}`, "error");
+      }
+    }
+
+    /* 4) RECORDS VIEW */
+    async function loadRecords() {
+      const tbody = document.getElementById("recordsTableBody");
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2.5rem;"><div class="skeleton" style="height:36px; width:80%; margin:0 auto;"></div></td></tr>`;
+
+      try {
+        const records = await fetchApi("/api/records?limit=100");
+        state.records = Array.isArray(records) ? records : [];
+        renderRecords();
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--color-danger-text);">${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    function renderRecords() {
+      const tbody = document.getElementById("recordsTableBody");
+      const filter = document.getElementById("recordActionFilter").value;
+
+      let filtered = state.records;
+      if (filter !== "ALL") {
+        filtered = filtered.filter((r) => r.action === filter);
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center; padding: 3.5rem 1rem;">
+              <div class="empty-state">
+                <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-width="2"/>
+                </svg>
+                <div class="empty-state-title">No Audit Records</div>
+                <div class="empty-state-text">No activity records logged yet.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((r) => {
+        let actionBadgeClass = "badge-neutral";
+        if (r.action === "listed_from_ems") actionBadgeClass = "badge-ems";
+        if (r.action === "created") actionBadgeClass = "badge-success";
+        if (r.action === "edited") actionBadgeClass = "badge-info";
+        if (r.action === "status_changed") actionBadgeClass = "badge-warning";
+        if (r.action === "deleted") actionBadgeClass = "badge-danger";
+
+        return `
+          <tr>
+            <td style="font-size:0.8rem; color:var(--text-muted);">${new Date(r.timestamp).toLocaleString()}</td>
+            <td style="font-weight:600; color:var(--text-main);">${escapeHtml(r.user || "Staff")}</td>
+            <td><span class="badge ${actionBadgeClass}">${escapeHtml(r.action)}</span></td>
+            <td style="font-weight:700; color:#ffffff;">${escapeHtml(r.title || "-")}</td>
+            <td><span class="badge ${r.status === 'ACTIVE' ? 'badge-success' : 'badge-neutral'}">${escapeHtml(r.status || "-")}</span></td>
+            <td style="font-size:0.8rem; color:var(--text-muted); max-width:260px; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(r.note || "-")}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function initEventListeners() {
+      // Products Toolbar
+      document.getElementById("prodSearchInput").addEventListener("input", renderProducts);
+      document.getElementById("prodStatusFilter").addEventListener("change", renderProducts);
+      document.getElementById("prodRefreshBtn").addEventListener("click", loadProducts);
+
+      // Add Product Modal & Image Uploader
+      const addModal = document.getElementById("addProductModal");
+      document.getElementById("openAddProductModalBtn").addEventListener("click", () => {
+        imageUploadState.add = [];
+        renderAddImageThumbs();
+        document.getElementById("addProductForm").reset();
+        addModal.classList.add("show");
+      });
+      document.getElementById("closeAddProductModalBtn").addEventListener("click", () => addModal.classList.remove("show"));
+      document.getElementById("cancelAddProductBtn").addEventListener("click", () => addModal.classList.remove("show"));
+
+      const addDropzone = document.getElementById("addImgDropzone");
+      const addFileInput = document.getElementById("addImgFileInput");
+
+      addDropzone.addEventListener("click", () => addFileInput.click());
+      addFileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleIncomingFiles(e.target.files, "add");
+          e.target.value = "";
+        }
+      });
+
+      addDropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        addDropzone.classList.add("dragover");
+      });
+      addDropzone.addEventListener("dragleave", () => addDropzone.classList.remove("dragover"));
+      addDropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        addDropzone.classList.remove("dragover");
+        if (e.dataTransfer?.files?.length > 0) {
+          handleIncomingFiles(e.dataTransfer.files, "add");
+        }
+      });
+
+      document.getElementById("addImgUrlBtn").addEventListener("click", () => {
+        const input = document.getElementById("addImgUrlInput");
+        const url = input.value.trim();
+        if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
+          const isFirst = imageUploadState.add.length === 0;
+          imageUploadState.add.push({
+            id: `url_${Date.now()}`,
+            src: url,
+            isPrimary: isFirst
+          });
+          renderAddImageThumbs();
+          input.value = "";
+        } else {
+          showToast("Please enter a valid HTTP/HTTPS image URL", "error");
+        }
+      });
+
+      document.getElementById("addProductForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById("saveAddProductBtn");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Creating product...";
+
+        // Sort images so primary image is first
+        const sortedImages = [...imageUploadState.add].sort((a, b) => (b.isPrimary ? 1 : 0) - (a.isPrimary ? 1 : 0));
+        const imagePayload = sortedImages.map((img) => img.src);
+
+        const payload = {
+          title: document.getElementById("addTitle").value.trim(),
+          descriptionHtml: document.getElementById("addDescription").value.trim() ? `<p>${escapeHtml(document.getElementById("addDescription").value.trim())}</p>` : undefined,
+          vendor: document.getElementById("addVendor").value.trim() || undefined,
+          productType: document.getElementById("addProductType").value.trim() || undefined,
+          price: document.getElementById("addPrice").value.trim() || undefined,
+          status: document.getElementById("addStatus").value,
+          tags: document.getElementById("addTags").value.trim() || undefined,
+          images: imagePayload
+        };
+
+        try {
+          await fetchApi("/api/products", {
+            method: "POST",
+            body: JSON.stringify(payload)
+          });
+          showToast("Product created successfully on Shopify", "success");
+          addModal.classList.remove("show");
+          document.getElementById("addProductForm").reset();
+          imageUploadState.add = [];
+          loadProducts();
+        } catch (err) {
+          showToast(`Creation failed: ${err.message}`, "error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Create Product";
+        }
+      });
+
+      // Edit Product Modal & Image Uploader
+      const editModal = document.getElementById("editProductModal");
+      document.getElementById("closeEditProductModalBtn").addEventListener("click", () => editModal.classList.remove("show"));
+      document.getElementById("cancelEditProductBtn").addEventListener("click", () => editModal.classList.remove("show"));
+
+      const editDropzone = document.getElementById("editImgDropzone");
+      const editFileInput = document.getElementById("editImgFileInput");
+
+      editDropzone.addEventListener("click", () => editFileInput.click());
+      editFileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleIncomingFiles(e.target.files, "edit");
+          e.target.value = "";
+        }
+      });
+
+      editDropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        editDropzone.classList.add("dragover");
+      });
+      editDropzone.addEventListener("dragleave", () => editDropzone.classList.remove("dragover"));
+      editDropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        editDropzone.classList.remove("dragover");
+        if (e.dataTransfer?.files?.length > 0) {
+          handleIncomingFiles(e.dataTransfer.files, "edit");
+        }
+      });
+
+      document.getElementById("editImgUrlBtn").addEventListener("click", () => {
+        const input = document.getElementById("editImgUrlInput");
+        const url = input.value.trim();
+        if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
+          imageUploadState.editNew.push({
+            id: `url_${Date.now()}`,
+            src: url
+          });
+          renderEditImageThumbs();
+          input.value = "";
+        } else {
+          showToast("Please enter a valid HTTP/HTTPS image URL", "error");
+        }
+      });
+
+      document.getElementById("editProductForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById("saveEditProductBtn");
+        const prodId = document.getElementById("editProductId").value;
+        if (!prodId) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Saving changes...";
+
+        const newImagePayload = imageUploadState.editNew.map((img) => img.src);
+
+        const payload = {
+          title: document.getElementById("editTitle").value.trim(),
+          descriptionHtml: document.getElementById("editDescription").value.trim() ? `<p>${escapeHtml(document.getElementById("editDescription").value.trim())}</p>` : undefined,
+          vendor: document.getElementById("editVendor").value.trim() || undefined,
+          productType: document.getElementById("editProductType").value.trim() || undefined,
+          price: document.getElementById("editPrice").value.trim() || undefined,
+          status: document.getElementById("editStatus").value,
+          tags: document.getElementById("editTags").value.trim() || undefined,
+          newImages: newImagePayload
+        };
+
+        try {
+          await fetchApi(`/api/products/${encodeURIComponent(prodId)}`, {
+            method: "PUT",
+            body: JSON.stringify(payload)
+          });
+          showToast("Product updated successfully", "success");
+          editModal.classList.remove("show");
+          await loadProducts();
+          if (currentDrawerProductId === prodId) {
+            openProductDrawer(prodId);
+          }
+        } catch (err) {
+          showToast(`Update failed: ${err.message}`, "error");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Save Changes";
+        }
+      });
+
+      // Global Clipboard Paste Support (Ctrl+V)
+      window.addEventListener("paste", (e) => {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        const isAddOpen = addModal.classList.contains("show");
+        const isEditOpen = editModal.classList.contains("show");
+
+        if (!isAddOpen && !isEditOpen) return;
+
+        const imageFiles = [];
+        for (const item of items) {
+          if (item.type && item.type.startsWith("image/")) {
+            const blob = item.getAsFile();
+            if (blob) imageFiles.push(blob);
+          }
+        }
+
+        if (imageFiles.length > 0) {
+          e.preventDefault();
+          const target = isAddOpen ? "add" : "edit";
+          handleIncomingFiles(imageFiles, target);
+          showToast(`Pasted ${imageFiles.length} image(s) from clipboard`, "info");
+        }
+      });
+
+      // Delete Product Confirmation
+      document.getElementById("closeDeleteModalBtn").addEventListener("click", () => document.getElementById("deleteConfirmModal").classList.remove("show"));
+      document.getElementById("cancelDeleteBtn").addEventListener("click", () => document.getElementById("deleteConfirmModal").classList.remove("show"));
+      document.getElementById("confirmDeleteBtn").addEventListener("click", executeDeleteProduct);
+
+      // Drawers
+      document.getElementById("closeProductDrawerBtn").addEventListener("click", () => {
+        document.getElementById("productDrawerBackdrop").classList.remove("show");
+      });
+      document.getElementById("productDrawerBackdrop").addEventListener("click", (e) => {
+        if (e.target.id === "productDrawerBackdrop") {
+          document.getElementById("productDrawerBackdrop").classList.remove("show");
+        }
+      });
+
+      document.getElementById("closeOrderDrawerBtn").addEventListener("click", () => {
+        document.getElementById("orderDrawerBackdrop").classList.remove("show");
+      });
+      document.getElementById("orderDrawerBackdrop").addEventListener("click", (e) => {
+        if (e.target.id === "orderDrawerBackdrop") {
+          document.getElementById("orderDrawerBackdrop").classList.remove("show");
+        }
+      });
+
+      // EMS Catalog Listeners
+      let emsTimer;
+      document.getElementById("emsSearchInput").addEventListener("input", (e) => {
+        clearTimeout(emsTimer);
+        emsTimer = setTimeout(() => {
+          state.ems.search = e.target.value.trim();
+          state.ems.page = 1;
+          loadEmsProducts();
+        }, 350);
+      });
+
+      document.getElementById("emsRefreshBtn").addEventListener("click", loadEmsProducts);
+      document.getElementById("emsRetryBtn").addEventListener("click", loadEmsProducts);
+
+      document.getElementById("emsSelectAllBtn").addEventListener("click", () => {
+        state.ems.items.forEach((item) => {
+          if (!item.alreadyListed) state.ems.selected.add(item.emsId);
+        });
+        renderEmsTable();
+      });
+
+      document.getElementById("emsMasterCheckbox").addEventListener("change", (e) => {
+        const checked = e.target.checked;
+        state.ems.items.forEach((item) => {
+          if (!item.alreadyListed) {
+            if (checked) state.ems.selected.add(item.emsId);
+            else state.ems.selected.delete(item.emsId);
+          }
+        });
+        renderEmsTable();
+      });
+
+      document.getElementById("emsPrevPageBtn").addEventListener("click", () => {
+        if (state.ems.page > 1) { state.ems.page--; loadEmsProducts(); }
+      });
+      document.getElementById("emsNextPageBtn").addEventListener("click", () => {
+        const totalPages = Math.ceil(state.ems.total / state.ems.limit) || 1;
+        if (state.ems.page < totalPages) { state.ems.page++; loadEmsProducts(); }
+      });
+
+      // Review Modal & EMS Submission
+      document.getElementById("emsSubmitListBtn").addEventListener("click", openEmsReviewModal);
+      document.getElementById("closeEmsReviewModalBtn").addEventListener("click", () => document.getElementById("emsReviewModal").classList.remove("show"));
+      document.getElementById("cancelEmsReviewBtn").addEventListener("click", () => document.getElementById("emsReviewModal").classList.remove("show"));
+      document.getElementById("confirmEmsReviewBtn").addEventListener("click", executeEmsListingFromReview);
+
+      document.getElementById("closeEmsResultModalBtn").addEventListener("click", () => document.getElementById("emsResultModal").classList.remove("show"));
+      document.getElementById("dismissEmsResultBtn").addEventListener("click", () => document.getElementById("emsResultModal").classList.remove("show"));
+
+      // Orders Listeners
+      let orderTimer;
+      document.getElementById("orderSearchInput").addEventListener("input", () => {
+        clearTimeout(orderTimer);
+        orderTimer = setTimeout(() => { state.orders.page = 1; loadOrders(); }, 350);
+      });
+      document.getElementById("orderFinancialFilter").addEventListener("change", () => { state.orders.page = 1; loadOrders(); });
+      document.getElementById("orderFulfillmentFilter").addEventListener("change", () => { state.orders.page = 1; loadOrders(); });
+      document.getElementById("orderRefreshBtn").addEventListener("click", () => { loadOrders(); loadOrdersSummary(); });
+      document.getElementById("syncOrdersBtn").addEventListener("click", triggerOrdersSync);
+
+      document.getElementById("orderPrevPageBtn").addEventListener("click", () => {
+        if (state.orders.page > 1) { state.orders.page--; loadOrders(); }
+      });
+      document.getElementById("orderNextPageBtn").addEventListener("click", () => {
+        const totalPages = Math.ceil(state.orders.total / state.orders.limit) || 1;
+        if (state.orders.page < totalPages) { state.orders.page++; loadOrders(); }
+      });
+
+      // Records Listeners
+      document.getElementById("recordActionFilter").addEventListener("change", renderRecords);
+      document.getElementById("recordsRefreshBtn").addEventListener("click", loadRecords);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initNavigation();
+      initEventListeners();
+      loadHealth();
+    });
+  </script>
+</body>
+</html>

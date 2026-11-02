@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - EMS Shopify Store</title>
+  <link rel="icon" type="image/png" href="/assets/devsil-logo.png" />
+  <link rel="stylesheet" href="/app.css" />
+  <style>
+    body {
+      background-color: var(--bg-page);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .login-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 2.25rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 100px;
+      background: var(--primary-gradient);
+      filter: blur(60px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .logo-container {
+      width: auto;
+      max-width: 200px;
+      height: 54px;
+      margin: 0 auto 1.5rem;
+      background: #ffffff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo-container img {
+      max-height: 36px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: #a5b4fc;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .login-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .btn-login {
+      width: 100%;
+      height: 46px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      gap: 0.75rem;
+    }
+
+    .error-notice {
+      display: none;
+      background-color: var(--color-danger-bg);
+      border: 1px solid var(--color-danger-border);
+      color: var(--color-danger-text);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .login-footer-info {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="logo-container">
+        <img src="/assets/devsil-logo.png" alt="Devsil EMS Logo" />
+      </div>
+      <div class="store-badge">EMS WORKSPACE PORTAL</div>
+      <h1 class="login-title">EMS Shopify Store</h1>
+      <p class="login-subtitle">Sign in with your Shopify account to continue to the catalog and orders management dashboard.</p>
+
+      <div id="errorArea" class="error-notice"></div>
+
+      <a href="/auth/login" class="btn btn-primary btn-login" id="loginBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </svg>
+        Login with Shopify
+      </a>
+
+      <a href="/auth/dev-login" class="btn btn-secondary" style="width:100%; margin-top:0.75rem; height:42px; font-weight:600; font-size:0.875rem;" id="quickStaffBtn">
+        Staff Quick Sign-In
+      </a>
+
+      <div class="login-footer-info">
+        Authorized staff authentication via Shopify Admin API
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const err = urlParams.get("error");
+    if (err) {
+      const el = document.getElementById("errorArea");
+      el.textContent = decodeURIComponent(err);
+      el.style.display = "block";
+    }
+  </script>
+</body>
+</html>

@@ -51,52 +51,56 @@ const memoryStore = {
 };
 
 export async function initDbPool() {
-  const host = process.env.DB_HOST || 'localhost';
-  const user = process.env.DB_USER || 'root';
-  const password = process.env.DB_PASSWORD || '';
-  const database = process.env.DB_NAME || 'ems_shopify_automation';
-  const port = Number(process.env.DB_PORT) || 3306;
-  const connectionLimit = Number(process.env.DB_CONNECTION_LIMIT) || 10;
+  const host = (process.env.EMS_DB_HOST || process.env.DB_HOST || 'localhost').trim();
+  const user = (process.env.EMS_DB_USER || process.env.DB_USER || 'root').trim();
+  const password = (process.env.EMS_DB_PASSWORD || process.env.DB_PASSWORD || '').trim();
+  const database = (process.env.EMS_DB_NAME || process.env.DB_NAME || 'u821088027_EMS').trim();
+  const port = Number(process.env.EMS_DB_PORT || process.env.DB_PORT) || 3306;
+  const connectionLimit = Number(process.env.DB_CONNECTION_LIMIT) || 5;
+
+  const baseConfig = {
+    host,
+    user,
+    password,
+    database,
+    port,
+    waitForConnections: true,
+    connectionLimit,
+    connectTimeout: 5000,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 10000
+  };
 
   try {
-    // Attempt connecting to MySQL server (without specifying DB first to create it if missing)
-    const adminConnection = await mysql.createConnection({
-      host,
-      user,
-      password,
-      port,
-      connectTimeout: 3000
-    });
-
-    await adminConnection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
-    await adminConnection.end();
-
-    // Create pooled connection
-    pool = mysql.createPool({
-      host,
-      user,
-      password,
-      database,
-      port,
-      waitForConnections: true,
-      connectionLimit,
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 10000
-    });
-
-    // Test connection
+    pool = mysql.createPool(baseConfig);
     const testConn = await pool.getConnection();
     testConn.release();
     isConnected = true;
-    console.log(`[DB] Successfully connected to MySQL database: ${database} on ${host}:${port}`);
+    console.log(`[DB] Successfully connected to live MySQL database: ${database} on ${host}:${port}`);
 
-    // Auto-apply schema
+    // Auto-apply schema migrations if needed
     await runSchemaMigrations();
     return pool;
   } catch (err) {
+    if (/ssl|handshake|tls/i.test(err.message)) {
+      try {
+        pool = mysql.createPool({
+          ...baseConfig,
+          ssl: { rejectUnauthorized: false }
+        });
+        const sslConn = await pool.getConnection();
+        sslConn.release();
+        isConnected = true;
+        console.log(`[DB] Successfully connected with SSL to database: ${database} on ${host}:${port}`);
+        await runSchemaMigrations();
+        return pool;
+      } catch (sslErr) {
+        console.warn(`[DB WARNING] SSL connection failed (${sslErr.message}).`);
+      }
+    }
     console.warn(`[DB WARNING] Could not connect to MySQL server (${err.message}).`);
-    console.warn(`[DB INFO] Running with integrated in-memory fallback layer. Update DB credentials in .env to connect to live MySQL.`);
+    console.warn(`[DB INFO] Running with integrated fallback layer.`);
     isConnected = false;
     return null;
   }

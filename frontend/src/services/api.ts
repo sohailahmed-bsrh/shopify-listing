@@ -3,7 +3,8 @@ import {
   Listing,
   ListingTemplate,
   DashboardStats,
-  AiGeneratedProduct
+  AiGeneratedProduct,
+  EMSProduct
 } from '../types';
 
 const API_BASE = '/api';
@@ -17,6 +18,65 @@ async function handleResponse<T>(res: Response): Promise<T> {
 }
 
 export const api = {
+  // Live EMS Products
+  async getEmsProducts(search?: string): Promise<{ success: boolean; products: EMSProduct[] }> {
+    const query = search ? `?search=${encodeURIComponent(search)}` : '';
+    const res = await fetch(`${API_BASE}/products${query}`);
+    return handleResponse(res);
+  },
+
+  async publishEmsProductToShopify(payload: {
+    ems_id?: string;
+    title: string;
+    price: number | string;
+    vendor?: string;
+    product_type?: string;
+    tags?: string[] | string;
+    status?: 'DRAFT' | 'ACTIVE';
+    description?: string;
+    images?: string[];
+  }): Promise<{
+    success: boolean;
+    shopify_product_id: string;
+    handle: string;
+    status: string;
+    admin_url: string;
+    preview_url?: string;
+    storefront_url?: string;
+    warning?: string;
+  }> {
+    const res = await fetch(`${API_BASE}/products/shopify/publish`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return handleResponse(res);
+  },
+
+  async checkShopifyLink(shopifyId: string): Promise<{
+    success: boolean;
+    check: {
+      reachable: boolean;
+      redirectedToPassword: boolean;
+      statusText: string;
+      testUrl?: string;
+    };
+  }> {
+    const res = await fetch(`${API_BASE}/products/shopify/link-check/${encodeURIComponent(shopifyId)}`);
+    return handleResponse(res);
+  },
+
+  async getShopifyStatus(): Promise<{
+    success: boolean;
+    connected: boolean;
+    shop_domain: string;
+    shop?: any;
+    error?: string;
+  }> {
+    const res = await fetch(`${API_BASE}/shopify/status`);
+    return handleResponse(res);
+  },
+
   // Stores
   async getStores(): Promise<{ success: boolean; stores: ShopifyStore[] }> {
     const res = await fetch(`${API_BASE}/shopify/stores`);

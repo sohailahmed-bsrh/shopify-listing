@@ -1,194 +1,165 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Navbar } from './components/Navbar';
-import { DashboardView } from './components/DashboardView';
-import { ListingsTableView } from './components/ListingsTableView';
-import { TemplatesView } from './components/TemplatesView';
-import { VoiceRecorder } from './components/VoiceRecorder';
-import { ListingWizardModal } from './components/ListingWizardModal';
-import { StoreSettingsModal } from './components/StoreSettingsModal';
-import { ShopifyStore, Listing, ListingTemplate, DashboardStats } from './types';
-import { api } from './services/api';
+import { EMSProductsView } from './components/EMSProductsView';
+import { EMSOrdersView } from './components/EMSOrdersView';
+import { ShopifyAutomationPage } from './components/ShopifyAutomationPage';
+import { INITIAL_EMS_PRODUCTS, getProductsByIds } from './data/emsProducts';
+import { EMSProduct } from './types';
 
 export function App() {
-  const [currentTab, setCurrentTab] = useState('dashboard');
-  const [stores, setStores] = useState<ShopifyStore[]>([]);
-  const [activeStoreId, setActiveStoreId] = useState<string>('');
-  const [listings, setListings] = useState<Listing[]>([]);
-  const [templates, setTemplates] = useState<ListingTemplate[]>([]);
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState<'products' | 'orders' | 'shopify'>('products');
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Modals state
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
-  const [editingListing, setEditingListing] = useState<Listing | null>(null);
-  const [isStoreModalOpen, setIsStoreModalOpen] = useState(false);
-
+  // Initialize from URL search parameters or session storage (preserves refresh state!)
   useEffect(() => {
-    loadAllData();
-  }, []);
-
-  const loadAllData = async () => {
-    setIsLoading(true);
     try {
-      const [storesRes, listingsRes, templatesRes, statsRes] = await Promise.allSettled([
-        api.getStores(),
-        api.getListings({ limit: 100 }),
-        api.getTemplates(),
-        api.getDashboardStats()
-      ]);
+      const params = new URLSearchParams(window.location.search);
+      const urlPage = params.get('page') as 'products' | 'orders' | 'shopify' | null;
+      const urlIds = params.get('ids');
 
-      if (storesRes.status === 'fulfilled') {
-        const fetchedStores = storesRes.value.stores || [];
-        setStores(fetchedStores);
-        if (fetchedStores.length > 0 && !activeStoreId) {
-          const defaultStore = fetchedStores.find(s => Boolean(s.is_default)) || fetchedStores[0];
-          setActiveStoreId(defaultStore.id);
+      let initialIds: string[] = [];
+
+      if (urlIds) {
+        initialIds = urlIds.split(',').filter(Boolean);
+      } else {
+        const stored = sessionStorage.getItem('ems_selected_product_ids');
+        if (stored) {
+          initialIds = JSON.parse(stored);
         }
       }
 
-      if (listingsRes.status === 'fulfilled') {
-        setListings(listingsRes.value.listings || []);
+      if (initialIds.length > 0) {
+        setSelectedProductIds(initialIds);
       }
 
-      if (templatesRes.status === 'fulfilled') {
-        setTemplates(templatesRes.value.templates || []);
+      if (urlPage === 'shopify' || urlPage === 'orders') {
+        setCurrentPage(urlPage);
       }
-
-      if (statsRes.status === 'fulfilled') {
-        setStats(statsRes.value.stats);
-      }
-    } catch (err) {
-      console.error('Error loading data:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleOpenNewListing = () => {
-    setEditingListing(null);
-    setIsWizardOpen(true);
-  };
-
-  const handleEditListing = async (listing: Listing) => {
-    try {
-      const fullListing = await api.getListingById(listing.id);
-      setEditingListing(fullListing.listing);
     } catch (e) {
-      setEditingListing(listing);
+      console.error('Error restoring session state:', e);
+    } finally {
+      setIsInitialized(true);
     }
-    setIsWizardOpen(true);
-  };
+  }, []);
 
-  const handleVoiceParsedAndOpenWizard = (productData: any, transcript: string, audioUrl?: string) => {
-    setEditingListing({
-      id: '',
-      title: productData.title || '',
-      description_html: productData.description_html || '',
-      vendor: productData.vendor || 'EMS Originals',
-      product_type: productData.product_type || '',
-      category: productData.category || '',
-      tags: Array.isArray(productData.tags) ? productData.tags.join(', ') : (productData.tags || ''),
-      status: 'draft',
-      sync_status: 'draft',
-      price: productData.price || 39.99,
-      compare_at_price: productData.compare_at_price || null,
-      cost_per_item: productData.cost_per_item || null,
-      inventory_quantity: 20,
-      seo_title: productData.seo_title || '',
-      seo_description: productData.seo_description || '',
-      variants: productData.variants || [],
-      voice_memo_url: audioUrl || null,
-      voice_transcript: transcript,
-      created_at: new Date().toISOString()
+  // Sync to URL & Session Storage whenever state changes
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    try {
+      sessionStorage.setItem('ems_selected_product_ids', JSON.stringify(selectedProductIds));
+
+      const params = new URLSearchParams();
+      if (currentPage === 'shopify') {
+        params.set('page', 'shopify');
+        if (selectedProductIds.length > 0) {
+          params.set('ids', selectedProductIds.join(','));
+        }
+      } else if (currentPage === 'orders') {
+        params.set('page', 'orders');
+      }
+
+      const queryString = params.toString();
+      const newUrl = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+
+      window.history.replaceState({}, '', newUrl);
+    } catch (e) {
+      console.error('Error syncing state to URL:', e);
+    }
+  }, [currentPage, selectedProductIds, isInitialized]);
+
+  // Handle single toggle
+  const handleToggleSelect = (id: string) => {
+    setSelectedProductIds(prev => {
+      if (prev.includes(id)) {
+        return prev.filter(i => i !== id);
+      } else {
+        // Appends to preserve user selection sequence!
+        return [...prev, id];
+      }
     });
-    setIsWizardOpen(true);
   };
 
-  const activeStore = stores.find(s => s.id === activeStoreId) || stores[0];
+  // Handle select all
+  const handleSelectAll = () => {
+    const allIds = INITIAL_EMS_PRODUCTS.map(p => p.id);
+    if (selectedProductIds.length === allIds.length) {
+      setSelectedProductIds([]);
+    } else {
+      setSelectedProductIds(allIds);
+    }
+  };
+
+  // Handle clear
+  const handleClearSelection = () => {
+    setSelectedProductIds([]);
+  };
+
+  // Remove single product from Shopify staging
+  const handleRemoveStagedProduct = (id: string) => {
+    setSelectedProductIds(prev => prev.filter(i => i !== id));
+  };
+
+  // Navigate to Shopify Automation
+  const handleNavigateToShopify = () => {
+    setCurrentPage('shopify');
+  };
+
+  // Navigate back to EMS Products
+  const handleBackToProducts = () => {
+    setCurrentPage('products');
+  };
+
+  // Retrieve products in exact preserved selection order
+  const stagedProducts = getProductsByIds(selectedProductIds);
 
   return (
-    <div className="flex min-h-screen bg-[#030712] text-zinc-100">
+    <div className="flex min-h-screen bg-[#030712] text-zinc-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       {/* Sidebar Navigation */}
       <Sidebar
-        currentTab={currentTab}
-        onSelectTab={(tab) => {
-          if (tab === 'stores') {
-            setIsStoreModalOpen(true);
-          } else {
-            setCurrentTab(tab);
-          }
-        }}
-        activeStoreName={activeStore?.name}
-        onOpenStoreModal={() => setIsStoreModalOpen(true)}
+        currentPage={currentPage}
+        onSelectPage={(page) => setCurrentPage(page)}
+        stagedCount={selectedProductIds.length}
       />
 
-      {/* Main Content Area */}
+      {/* Main Workspace */}
       <div className="flex-1 flex flex-col min-w-0">
         <Navbar
-          stores={stores}
-          currentStoreId={activeStoreId}
-          onSelectStore={(id) => setActiveStoreId(id)}
-          onNewListing={handleOpenNewListing}
-          onOpenStoreModal={() => setIsStoreModalOpen(true)}
+          currentPage={currentPage}
+          stagedCount={selectedProductIds.length}
+          onNavigateToShopify={handleNavigateToShopify}
         />
 
-        <main className="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
-          {currentTab === 'dashboard' && (
-            <DashboardView
-              stats={stats}
-              onNewListing={handleOpenNewListing}
-              onOpenVoice={() => setCurrentTab('voice')}
-              onOpenStores={() => setIsStoreModalOpen(true)}
-              onEditListing={handleEditListing}
+        <main className="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+          {currentPage === 'products' && (
+            <EMSProductsView
+              products={INITIAL_EMS_PRODUCTS}
+              selectedProductIds={selectedProductIds}
+              onToggleSelect={handleToggleSelect}
+              onSelectAll={handleSelectAll}
+              onClearSelection={handleClearSelection}
+              onNavigateToShopify={handleNavigateToShopify}
             />
           )}
 
-          {currentTab === 'listings' && (
-            <ListingsTableView
-              listings={listings}
-              isLoading={isLoading}
-              onRefresh={loadAllData}
-              onNewListing={handleOpenNewListing}
-              onEditListing={handleEditListing}
-            />
+          {currentPage === 'orders' && (
+            <EMSOrdersView />
           )}
 
-          {currentTab === 'voice' && (
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-xl font-bold text-white tracking-tight">Voice-to-Listing Studio</h2>
-                <p className="text-xs text-zinc-400">Record a voice memo and automatically convert it into a complete Shopify listing</p>
-              </div>
-
-              <VoiceRecorder onParsedProduct={handleVoiceParsedAndOpenWizard} />
-            </div>
-          )}
-
-          {currentTab === 'templates' && (
-            <TemplatesView
-              templates={templates}
-              onRefresh={loadAllData}
+          {currentPage === 'shopify' && (
+            <ShopifyAutomationPage
+              selectedProducts={stagedProducts}
+              onRemoveProduct={handleRemoveStagedProduct}
+              onClearAll={handleClearSelection}
+              onBackToProducts={handleBackToProducts}
             />
           )}
         </main>
       </div>
-
-      {/* Flagship Product Creation Wizard Modal */}
-      <ListingWizardModal
-        isOpen={isWizardOpen}
-        onClose={() => setIsWizardOpen(false)}
-        onSaved={loadAllData}
-        initialData={editingListing}
-        stores={stores}
-      />
-
-      {/* Store Credentials Modal */}
-      <StoreSettingsModal
-        isOpen={isStoreModalOpen}
-        onClose={() => setIsStoreModalOpen(false)}
-        onStoresUpdated={loadAllData}
-      />
     </div>
   );
 }

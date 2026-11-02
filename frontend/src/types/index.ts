@@ -112,3 +112,40 @@ export interface AiGeneratedProduct {
     price: number;
   }>;
 }
+
+export interface EMSProduct {
+  id: string;
+  title: string;
+  sku: string;
+  category: string;
+  price: number;
+  compare_at_price?: number;
+  stock: number;
+  status: 'active' | 'draft' | 'low_stock';
+  image: string;
+  vendor: string;
+  description: string;
+  tags?: string[];
+  variantsCount?: number;
+  brand?: string;
+  gender?: string;
+  color?: string;
+  size?: string;
+  extra_images?: string[];
+  video_url?: string | null;
+  voice_note_url?: string | null;
+  starting_price?: string | number;
+  minimum_price?: string | number;
+  shopify_product_id?: string | null;
+  shopify_url?: string | null;
+}
+
+export interface ShopifyOrder {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  total: number;
+  status: 'paid' | 'pending' | 'refunded';
+  itemsCount: number;
+  createdAt: string;
+}
