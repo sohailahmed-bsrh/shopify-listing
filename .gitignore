@@ -1,14 +1,4 @@
-node_modules/
-**/node_modules/
+__pycache__/
+*.py[cod]
+venv/
 .env
-**/.env
-*.exe
-ngrok.exe
-**/ngrok.exe
-backend/ems_project/
-backend/uploads/
-data/records.json
-data/orders.json
-data/orders-meta.json
-data/links.json
-backend/data/*.json
