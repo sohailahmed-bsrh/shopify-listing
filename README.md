@@ -1,27 +1,43 @@
-# Shopify Product Catalog Automation Suite
+<div align="center">
 
-> E-commerce operational suite automating supplier feed validation and Shopify Admin REST API uploads.
+<h1>Shopify Catalog Automation & Listing Optimization</h1>
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/sohailahmed-bsrh/shopify-listing)
-[![Live Showcase](https://img.shields.io/badge/Live-Showcase-0A66C2?style=flat-square&logo=googlechrome)](https://sohail.devsil.com/projects.html)
-[![Author](https://img.shields.io/badge/Author-Sohail%20Ahmed-20BEFF?style=flat-square)](https://sohail.devsil.com)
+<img src="https://readme-typing-svg.herokuapp.com?font=Inter&weight=800&size=22&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&width=800&lines=Automated+Product+Catalog+Generation;SEO-Optimized+Product+Descriptions;Shopify+Admin+REST+API+Synchronization;Full-Stack+E-Commerce+Automation" alt="Typing Header" />
 
----
+<p><strong>Automated E-Commerce Product Catalog Ingestion, SEO Enrichment, and Storefront Sync</strong></p>
 
-## Overview
+<p>
+  <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,fastapi,react,js,github&theme=dark" alt="Skills" /></a>
+</p>
 
-Manual product uploads to Shopify stores introduce pricing inconsistencies, inventory errors, and consume hundreds of operational hours.
-
-This project provides an end-to-end, reproducible implementation engineered to solve this challenge through verified data transformations, reliable algorithms, and production-ready architecture.
+</div>
 
 ---
 
-## Key Features
+## Executive Summary
 
-- Bulk supplier inventory file ingestion supporting CSV, Excel, and JSON formats
-- Product data normalization, variant structuring, and category tax mapping
-- Rate-limited batch publishing via Shopify Admin REST API
-- Standalone Node.js backend with web status monitor
+The Shopify Catalog Automation platform streamlines e-commerce inventory publishing. From supplier specifications or raw imagery, the pipeline generates SEO-optimized product titles, descriptions, tag hierarchies, and variant pricing schemas, publishing directly to Shopify storefronts through authenticated Admin REST APIs.
+
+---
+
+## Platform Interface & Listing Gallery
+
+<table align="center">
+  <tr>
+    <td align="center"><b>Product Ingestion & Title Optimization</b><br><sub>Raw product specification ingestion and SEO title generation.</sub></td>
+    <td align="center"><b>Attribute Extraction & Taxonomy Mapping</b><br><sub>Automated category mapping and variant property extraction.</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="frontend/screenshots/1.png" alt="Product Ingestion" width="460"/></td>
+    <td align="center"><img src="frontend/screenshots/2.png" alt="Attribute Extraction" width="460"/></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><b>Shopify Storefront Synchronization Dashboard</b><br><sub>Direct API synchronization with live storefront inventory catalogs.</sub></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><img src="frontend/screenshots/3.png" alt="Shopify Sync" width="650"/></td>
+  </tr>
+</table>
 
 ---
 
@@ -29,73 +45,46 @@ This project provides an end-to-end, reproducible implementation engineered to s
 
 ```mermaid
 flowchart TD
-    SupplierData[Raw Supplier Inventory Feeds] --> Ingestion[Data Normalization & Validation]
-    Ingestion --> Transform[Variant & SKU Hierarchy Mapping]
-    Transform --> RateLimiter[Shopify API Rate Limiter Queue]
-    RateLimiter --> ShopifyAPI[Shopify Admin REST API]
-    ShopifyAPI --> Storefront[Live Shopify Store Catalog]
+    A[Raw Supplier Specs / Product Imagery] --> B[Data Normalization & Attribute Extraction]
+    B --> C[SEO Optimization & Title Generation]
+    C --> D[HTML Description & Structured Tag Generator]
+    D --> E[Shopify Admin REST API Gateway]
+    E --> F[Storefront Inventory Catalog & Live Listings]
 ```
 
 ---
 
 ## Technology Stack
 
-| Technology | Version / Spec | Role in Architecture |
-| :--- | :--- | :--- |
-| **Node.js & Express** | `18+` | API client, CSV stream parser, and batch worker |
-| **Shopify Admin REST API** | `2024-01+` | Product, variant, and media asset mutation endpoints |
-| **HTML5 / CSS3** | `Modern` | Operational dashboard for job dispatching |
+| Layer | Technologies |
+| :--- | :--- |
+| Frontend | React, Vite, Tailwind CSS |
+| Backend API | Python, FastAPI, Requests |
+| Storefront Integration | Shopify Admin REST API |
 
 ---
 
-## Repository Structure
+## Installation & Setup
 
-```text
-shopify-listing/
-|-- backend/
-|   |-- standalone/
-|   |   |-- package.json
-|   |   `-- server.js
-|   |-- src/
-|   |-- .env.example
-|   `-- package.json
-|-- .gitignore
-`-- README.md
-```
-
----
-
-## Installation and Execution
-
-### Prerequisites
-- Python 3.10 or higher
-- Git version control
-- Virtual environment manager (`venv`)
-
-### Setup Instructions
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/sohailahmed-bsrh/shopify-listing.git
 cd shopify-listing
-```
 
-2. Configure environment and dependencies:
-```bash
-cd backend/standalone
+# Configure backend
+cd backend
+pip install -r requirements.txt
+python main.py
+
+# Configure frontend
+cd ../frontend
 npm install
-cp ../.env.example .env
-node server.js
+npm run dev
 ```
 
 ---
 
-## Interface and Verification
-The system produces verifiable execution logs, prediction matrices, or interactive browser interfaces depending on the target mode. Verify operation by executing the commands specified above or inspecting the demonstration notebooks.
+## Author & License
 
----
-
-## Author and Contact
-Developed by **Sohail Ahmed** — Full Stack AI Engineer & Machine Learning Specialist.
-- **Portfolio:** [sohail.devsil.com](https://sohail.devsil.com)
-- **GitHub:** [@sohailahmed-bsrh](https://github.com/sohailahmed-bsrh)
-- **Email:** [sohail.bsrh@gmail.com](mailto:sohail.bsrh@gmail.com)
+- **Author**: Sohail Ahmed ([Portfolio](https://sohail.devsil.com) | [GitHub](https://github.com/sohailahmed-bsrh))
+- **License**: Distributed under the MIT License.
