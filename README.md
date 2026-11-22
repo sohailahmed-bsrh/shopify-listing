@@ -10,32 +10,40 @@
   <a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,fastapi,react,js,github&theme=dark" alt="Skills" /></a>
 </p>
 
+<p>
+  <a href="#overview">Overview</a> &bull;
+  <a href="#system-architecture">Architecture</a> &bull;
+  <a href="#visual-showcase-gallery">Visual Gallery</a> &bull;
+  <a href="#core-capabilities">Capabilities</a> &bull;
+  <a href="#installation--setup">Installation</a> &bull;
+  <a href="#author--contact-information">Author</a>
+</p>
+
 </div>
 
 ---
-
-## Executive Summary
+## Overview
 
 The Shopify Catalog Automation platform streamlines e-commerce inventory publishing. From supplier specifications or raw imagery, the pipeline generates SEO-optimized product titles, descriptions, tag hierarchies, and variant pricing schemas, publishing directly to Shopify storefronts through authenticated Admin REST APIs.
 
 ---
 
-## Platform Interface & Listing Gallery
+## Visual Showcase Gallery
 
-<table align="center">
+<table width="100%" align="center">
   <tr>
-    <td align="center"><b>Product Ingestion & Title Optimization</b><br><sub>Raw product specification ingestion and SEO title generation.</sub></td>
-    <td align="center"><b>Attribute Extraction & Taxonomy Mapping</b><br><sub>Automated category mapping and variant property extraction.</sub></td>
+    <td width="50%" align="center"><b>Product Ingestion & Title Optimization</b><br><sub>Raw product specification ingestion and SEO title generation.</sub></td>
+    <td width="50%" align="center"><b>Attribute Extraction & Taxonomy Mapping</b><br><sub>Automated category mapping and variant property extraction.</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="frontend/screenshots/1.png" alt="Product Ingestion" width="460"/></td>
     <td align="center"><img src="frontend/screenshots/2.png" alt="Attribute Extraction" width="460"/></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><b>Shopify Storefront Synchronization Dashboard</b><br><sub>Direct API synchronization with live storefront inventory catalogs.</sub></td>
+    <td colspan="2" align="center"><b>Shopify Storefront Synchronization Dashboard</b><br><sub>Direct API synchronization with live storefront inventory catalogs.</sub></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><img src="frontend/screenshots/3.png" alt="Shopify Sync" width="650"/></td>
+    <td colspan="2" align="center"><img src="frontend/screenshots/3.png" alt="Shopify Sync" width="650"/></td>
   </tr>
 </table>
 
@@ -81,10 +89,24 @@ cd ../frontend
 npm install
 npm run dev
 ```
-
 ---
 
-## Author & License
+## Author & Contact Information
 
-- **Author**: Sohail Ahmed ([Portfolio](https://sohail.devsil.com) | [GitHub](https://github.com/sohailahmed-bsrh))
-- **License**: Distributed under the MIT License.
+<table width="100%" align="center">
+  <tr>
+    <td align="center" style="padding: 20px;">
+      <h3>Sohail Ahmed</h3>
+      <p><strong>Full-Stack Artificial Intelligence & Computer Vision Engineer</strong></p>
+      <p>
+        <a href="https://sohail.devsil.com"><img src="https://img.shields.io/badge/Live_Portfolio-sohail.devsil.com-0052FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio"/></a>
+        <a href="https://github.com/sohailahmed-bsrh"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+        <a href="https://linkedin.com/in/sohail-ahmed-dev"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+        <a href="mailto:sohail.bsrh@gmail.com"><img src="https://img.shields.io/badge/Email-Contact_Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
+      </p>
+      <p><em>Available for technical roles in Artificial Intelligence, Computer Vision, and Full-Stack Engineering.</em></p>
+      <hr style="border: 0; height: 1px; background: #30363d; margin: 15px 0;">
+      <small>Repository: <code>sohailahmed-bsrh/shopify-listing</code> &bull; Distributed under the MIT License.</small>
+    </td>
+  </tr>
+</table>
